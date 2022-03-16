@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{common/DemoCommon::test}"></div>
+<table>
+    <thead>
+    <tr>
+        <th>
+            index
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="index:${data}">
+        <td th:text="${index}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
