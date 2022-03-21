@@ -27,7 +27,7 @@ public class DemoController {
      */
     @RequestMapping("/test1")
     public String index() {
-        return "index";
+        return "index1";
     }
 
     /**
@@ -39,7 +39,7 @@ public class DemoController {
     public String data(Model model) {
         List<Integer> list = demoService.getList();
         model.addAttribute("data",list);
-        return "/data/data";
+        return "/data/Demo/data";
     }
 
 
@@ -53,7 +53,7 @@ public class DemoController {
     public String dataBase(Model model) throws SQLException {
         System.out.println(dataSource.getClass());
         System.out.println(dataSource.getConnection());
-        return "index";
+        return "index1";
     }
 
 
@@ -91,5 +91,10 @@ public class DemoController {
     public String pathVirable(@PathVariable("id")Integer id, Model model){
         model.addAttribute("data", id);
         return "data/Demo/pathVirable";
+    }
+
+    @RequestMapping("/test7/")
+    public String login(Model model){
+        return "login";
     }
 }
