@@ -31,6 +31,8 @@ public class AccountController {
         try{
             CheckAccountDTO checkAccountDTO = accountService.login(id, password);
             model.addAttribute("data", checkAccountDTO);
+            model.addAttribute("location1", 1);
+            model.addAttribute("location2", 2);
             return checkAccountDTO.getNextPage();
         }catch(Exception e){
             LogUtil.errorLog(e);

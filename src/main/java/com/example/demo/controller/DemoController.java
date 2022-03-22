@@ -47,6 +47,11 @@ public class DemoController {
         return "/data/Demo/data";
     }
 
+    @RequestMapping("/test0")
+    public String data1(Model model) {
+        return "/data/Demo/data";
+    }
+
 
     /**
      * 进阶测试，测试数据库链接是否成功
