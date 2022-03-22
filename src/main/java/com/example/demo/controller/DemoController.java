@@ -25,8 +25,13 @@ public class DemoController {
      * 最初级的测试，测试controller层是否能返回页面
      * @return
      */
-    @RequestMapping("/test1")
+    @RequestMapping("/test")
     public String index() {
+        return "index";
+    }
+
+    @RequestMapping("/test1")
+    public String index1() {
         return "index1";
     }
 
@@ -95,6 +100,6 @@ public class DemoController {
 
     @RequestMapping("/test7/")
     public String login(Model model){
-        return "login";
+        return "account/login";
     }
 }
