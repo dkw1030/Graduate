@@ -1,5 +1,7 @@
 package com.example.demo.utils;
 
+import com.example.demo.model.Constant.Switcher;
+
 import java.io.*;
 
 public class LogUtil {
@@ -60,8 +62,8 @@ public class LogUtil {
         String time = "[" + TimeUtil.getTime() + "]\n";
         String exception = time + info;
         String digestException = time + e.getMessage() + "\n";
-        write(Constant.switcher.exception_log_path, exception);
-        write(Constant.switcher.exception_digest_log_path, digestException);
+        write(Switcher.FilePathSwitcher.exception_log_path, exception);
+        write(Switcher.FilePathSwitcher.exception_digest_log_path, digestException);
     }
 
 //    public static void main(String[] args) {
