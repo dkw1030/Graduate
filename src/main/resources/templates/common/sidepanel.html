@@ -13,29 +13,17 @@
             <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                 <li class="nav-item"  th:each="item:${status.getSidePanel()}">
                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                    <a class="nav-link" th:classappend="${item.id==status.getCurMenu()?'active':''}" th:href="${item.url}">
+                    <a class="nav-link" th:classappend="${item.id==status.getCurMenu()?'active':''}" th:href="${item.url}"
+                       th:attrappend="aria-expanded=${item.subMenus.size()==0?'':(item.id==status.getCurMenu()?'true':'false')}
+                       ,data-toggle=${item.subMenus.size()>0?'collapse':''}
+                       ,data-target=${item.subMenus.size()>0?'#submenu-1':''}
+                       ,aria-controls=${item.subMenus.size()>0?'submenu-1':''}">
+
                         <span th:replace="common/sidepanelIcon::${item.icon}"></span>
                         <span class="nav-link-text" th:text="${item.title}"></span>
                         <div th:if="${item.subMenus.size()>0}">
                             <span th:replace="~{common/sidepanelIcon::submenu}"></span>
                         </div>
-                    </a><!--//nav-link-->
-<!--                    <div id="submenu-1" class="collapse submenu submenu-1" data-parent="#menu-accordion">-->
-<!--                        <ul class="submenu-list list-unstyled">-->
-<!--                            <li class="submenu-item"><a class="submenu-link" href="notifications.html">Notifications</a></li>-->
-<!--                            <li class="submenu-item"><a class="submenu-link" href="account.html">Account</a></li>-->
-<!--                            <li class="submenu-item"><a class="submenu-link" href="settings.html">Settings</a></li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-                </li><!--//nav-item-->
-
-
-
-                <li class="nav-item has-submenu">
-                    <a class="nav-link submenu-toggle" href="#" data-toggle="collapse" data-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-						<span th:replace="~{common/sidepanelIcon::process}"></span>
-                        <span class="nav-link-text">Pages</span>
-                        <span th:replace="~{common/sidepanelIcon::submenu}"></span>
                     </a><!--//nav-link-->
                     <div id="submenu-1" class="collapse submenu submenu-1" data-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
@@ -45,6 +33,23 @@
                         </ul>
                     </div>
                 </li><!--//nav-item-->
+
+
+
+<!--                <li class="nav-item has-submenu">-->
+<!--                    <a class="nav-link submenu-toggle" href="#" data-toggle="collapse" data-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">-->
+<!--						<span th:replace="~{common/sidepanelIcon::process}"></span>-->
+<!--                        <span class="nav-link-text">Pages</span>-->
+<!--                        <span th:replace="~{common/sidepanelIcon::submenu}"></span>-->
+<!--                    </a>&lt;!&ndash;//nav-link&ndash;&gt;-->
+<!--                    <div id="submenu-1" class="collapse submenu submenu-1" data-parent="#menu-accordion">-->
+<!--                        <ul class="submenu-list list-unstyled">-->
+<!--                            <li class="submenu-item"><a class="submenu-link" href="notifications.html">Notifications</a></li>-->
+<!--                            <li class="submenu-item"><a class="submenu-link" href="account.html">Account</a></li>-->
+<!--                            <li class="submenu-item"><a class="submenu-link" href="settings.html">Settings</a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </li>&lt;!&ndash;//nav-item&ndash;&gt;-->
 <!--                <li class="nav-item has-submenu">-->
 <!--                    &lt;!&ndash;//Bootstrap Icons: https://icons.getbootstrap.com/ &ndash;&gt;-->
 <!--                    <a class="nav-link submenu-toggle" th:classappend="${location1==1?'active':''}" href="#" data-toggle="collapse" data-target="#submenu-2" th:attr="aria-expanded=${location1==1?'true':'false'}"  aria-controls="submenu-2">-->

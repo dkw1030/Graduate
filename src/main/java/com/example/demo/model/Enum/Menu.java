@@ -10,7 +10,7 @@ import java.util.List;
 public enum Menu {
     HOME(MenuSwitcher.HOME_ID, "/test7/", "主页", MenuSwitcher.HOME_ICON, Collections.emptyList()),
 
-    TRADE_BUYER(MenuSwitcher.TRADE_BUYER_ID, "/test7/", "采购协同", MenuSwitcher.TRADE_ICON, Arrays.asList(SubMenu.Test0, SubMenu.Test1)),
+    TRADE_BUYER(MenuSwitcher.TRADE_BUYER_ID, "#", "采购协同", MenuSwitcher.TRADE_ICON, Arrays.asList(SubMenu.Test0, SubMenu.Test1)),
     TRADE_SELLER(MenuSwitcher.TRADE_SELLER_ID, "/test7/", "销售协同", MenuSwitcher.TRADE_ICON, Collections.emptyList()),
 
     PROCESS_BUYER(MenuSwitcher.PROCESS_BUYER_ID, "/test7/", "订单进度", MenuSwitcher.PROCESS_ICON, Collections.emptyList()),

@@ -35,6 +35,6 @@ public class Switcher {
         public static String FRAMEWORK_ICON = "framework";
         public static String HELP_ICON = "help";
 
-        public static List<Menu> BuyerSidePanel = Arrays.asList(Menu.HOME, Menu.TRADE_SELLER);
+        public static List<Menu> BuyerSidePanel = Arrays.asList(Menu.HOME, Menu.TRADE_BUYER);
     }
 }
