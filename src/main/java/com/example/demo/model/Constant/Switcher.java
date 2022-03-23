@@ -14,7 +14,11 @@ public class Switcher {
 
     public static class MenuSwitcher{
         public static int HOME_ID = 0;
+
         public static int TRADE_BUYER_ID = 1;
+        public static int TEST0=0;
+        public static int TEST1=1;
+
         public static int TRADE_SELLER_ID = 2;
         public static int INFO_SELLER_ID = 3;
         public static int DISTRIBUTION_BUYER_ID = 4;

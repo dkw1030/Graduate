@@ -20,7 +20,8 @@ public class AccountService {
         //设置
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TEST0);
         resultDTO.setSidePanelStatusDTO(sidePanelStatusDTO);
         String actrualPassword;
         //首先进行账号验证

@@ -16,8 +16,8 @@
                     <a class="nav-link" th:classappend="${item.id==status.getCurMenu()?'active':''}" th:href="${item.url}"
                        th:attrappend="aria-expanded=${item.subMenus.size()==0?'':(item.id==status.getCurMenu()?'true':'false')}
                        ,data-toggle=${item.subMenus.size()>0?'collapse':''}
-                       ,data-target=${item.subMenus.size()>0?'#submenu-1':''}
-                       ,aria-controls=${item.subMenus.size()>0?'submenu-1':''}">
+                       ,data-target=${item.subMenus.size()>0?'#submenu-'+item.id:''}
+                       ,aria-controls=${item.subMenus.size()>0?'submenu-'+item.id:''}">
 
                         <span th:replace="common/sidepanelIcon::${item.icon}"></span>
                         <span class="nav-link-text" th:text="${item.title}"></span>
@@ -25,11 +25,14 @@
                             <span th:replace="~{common/sidepanelIcon::submenu}"></span>
                         </div>
                     </a><!--//nav-link-->
-                    <div id="submenu-1" class="collapse submenu submenu-1" data-parent="#menu-accordion">
+                    <div th:if="${item.subMenus.size()>0}" th:attrappend="id='submenu-'+${item.id}"  class="collapse submenu submenu-1" th:classappend="${item.id==status.getCurMenu()?'show':''}" data-parent="#menu-accordion">
                         <ul class="submenu-list list-unstyled">
-                            <li class="submenu-item"><a class="submenu-link" href="notifications.html">Notifications</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="account.html">Account</a></li>
-                            <li class="submenu-item"><a class="submenu-link" href="settings.html">Settings</a></li>
+                            <div th:each="submenu:${item.subMenus}">
+                                <li class="submenu-item">
+                                    <a class="submenu-link" th:classappend="${submenu.id==status.getCurSubMenu()?'active':''}" th:href="${submenu.url}" th:text="${submenu.title}"></a>
+                                </li>
+                            </div>
+
                         </ul>
                     </div>
                 </li><!--//nav-item-->
