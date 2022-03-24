@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.ResultDTO;
 import com.example.demo.model.DTO.CheckAccountDTO;
+import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.service.AccountService;
 import com.example.demo.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,15 @@ public class AccountController {
         int code = -1;
         try{
             ResultDTO<CheckAccountDTO> resultDTO = accountService.login(id, password);
+            //设置
+            SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+            sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
+            sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TEST0);
+
             model.addAttribute("data", resultDTO.getData());
-            model.addAttribute("sidePanel", resultDTO.getSidePanelStatusDTO());
-            model.addAttribute("test","sidepanel");
+            model.addAttribute("sidePanel", sidePanelStatusDTO);
+//            model.addAttribute("test","sidepanel");
             code = resultDTO.getCode();
             if(code == 0){
                 return "index";

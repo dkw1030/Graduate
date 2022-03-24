@@ -17,12 +17,6 @@ public class AccountService {
     public ResultDTO<CheckAccountDTO> login(int id, String password){
         ResultDTO<CheckAccountDTO> resultDTO= new ResultDTO<>();
         CheckAccountDTO checkAccountDTO = new CheckAccountDTO();
-        //设置
-        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TEST0);
-        resultDTO.setSidePanelStatusDTO(sidePanelStatusDTO);
         String actrualPassword;
         //首先进行账号验证
         actrualPassword = accountMapper.getPasswordById(id);
