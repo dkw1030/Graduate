@@ -1,8 +1,21 @@
 package com.example.demo.model.Enum;
 
+import com.example.demo.model.Constant.Switcher;
+
 public enum SubMenu {
-    Test0(0, "", "test0"),
-    Test1(1, "", "test1");
+    TRADE_BUYER_ORDER_DETAIL(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID, "", "订单详情"),
+    TRADE_BUYER_INPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_INPUT_ORDER_ID, "", "导入订单"),
+    //TRADE_BUYER_OUTPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_OUTPUT_ORDER_ID, "", "导出订单"),
+
+    INFO_SELLER_INFO_DETAIL(Switcher.MenuSwitcher.INFO_SELLER_INFO_DETAIL_ID, "", "供应商详情"),
+    INFO_SELLER_INPUT_INFO(Switcher.MenuSwitcher.INFO_SELLER_INPUT_INFO_ID, "", "导入供应商信息"),
+
+    PROCESS_SELLER_INPUT_PROCESS(Switcher.MenuSwitcher.PROCESS_SELLER_INPUT_PROCESS_ID, "", "导入进度"),
+
+    DISTRIBUTION_WAIT_DELIVER(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID, "", "待发货"),
+    DISTRIBUTION_DELIVERING(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID, "", "运输中"),
+    DISTRIBUTION_RESULT(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID, "", "待签收");
+
     public final int id;
     public final String url;
     public final String title;

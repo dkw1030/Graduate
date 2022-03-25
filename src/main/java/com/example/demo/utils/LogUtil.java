@@ -55,32 +55,24 @@ public class LogUtil {
         }
     }
 
-    public static void errorLog(Exception e) {
-        errorLog(e, -1);
+    public static void errorLog(Exception e,String location) {
+        errorLog(e, location, -100);
     }
 
-    public static void errorLog(Exception e, int code) {
+    public static void errorLog(Exception e,String location, int code) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
         String info = sw.toString(); // stack trace as a string
         String time = "[" + TimeUtil.getTime() + "]\n";
         String strCode = null;
-        if(code != -1){
+        if(code != -100){
             strCode = code + "\n";
         }
-        String exception = time + strCode + info;
-        String digestException = time + strCode + e.getMessage() + "\n";
+        location += "\n";
+        String exception = time + location + strCode + info;
+        String digestException = time + location + strCode + e.getMessage() + "\n";
         write(Switcher.FilePathSwitcher.exception_log_path, exception);
         write(Switcher.FilePathSwitcher.exception_digest_log_path, digestException);
     }
-
-//    public static void main(String[] args) {
-//        try{
-//            int b = 0;
-//            int a=1/b;
-//        }catch(Exception e){
-//            errorLog(e);
-//        }
-//    }
 }

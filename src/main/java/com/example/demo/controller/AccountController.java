@@ -23,32 +23,37 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @RequestMapping("/login")
+    public String loginLayout(Model model){
+        return "account/login";
+    }
+
     @RequestMapping("/user/login")
     public String login(@RequestParam("userId") int id,
                         @RequestParam("password") String password,
                         Model model){
         int code = -1;
         try{
+            //查询是否存在用户以及密码是否正确
             ResultDTO<CheckAccountDTO> resultDTO = accountService.login(id, password);
-            //设置
-            SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-            sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
-            sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TEST0);
-
-            model.addAttribute("data", resultDTO.getData());
-            model.addAttribute("sidePanel", sidePanelStatusDTO);
-//            model.addAttribute("test","sidepanel");
             code = resultDTO.getCode();
-            if(code == 0){
-                return "index";
-            }else if(code == 1){
+            if(code == 1){
+                model.addAttribute("errorText", resultDTO.getData().getResult());
                 return "account/login";
+            }else if(code == 0){
+                //查询用户信息
+
+                SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+                sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+                sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
+
+                model.addAttribute("sidePanel", sidePanelStatusDTO);
+                return "main/home";
             }else{
                 throw new Exception();
             }
         }catch(Exception e){
-            LogUtil.errorLog(e, code);
+            LogUtil.errorLog(e,"login controller");
             return "error/404";
         }
     }

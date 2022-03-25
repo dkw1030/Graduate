@@ -13,22 +13,34 @@ public class Switcher {
     }
 
     public static class MenuSwitcher{
-        public static int HOME_ID = 0;
+        public static int NO_MENU = 0;
+        public static int NO_SUBMENU = 0;
 
+
+        public static int HOME_ID = 11;
         public static int TRADE_BUYER_ID = 1;
-        public static int TEST0=0;
-        public static int TEST1=1;
-
         public static int TRADE_SELLER_ID = 2;
         public static int INFO_SELLER_ID = 3;
-        public static int DISTRIBUTION_BUYER_ID = 4;
-        public static int DISTRIBUTION_SELLER_ID = 5;
+        public static int PROCESS_BUYER_ID = 9;
+        public static int PROCESS_SELLER_ID = 10;
+        public static int DISTRIBUTION_ID = 4;
         public static int ANALYSIS_SELLER_ID = 6;
         public static int FRAMEWORK_ID = 7;
         public static int HELP_ID = 8;
-        public static int PROCESS_BUYER_ID = 9;
-        public static int PROCESS_SELLER_ID = 10;
 
+
+        public static int TRADE_BUYER_ORDER_DETAIL_ID = 1;
+        public static int TRADE_BUYER_INPUT_ORDER_ID = 2;
+        //public static int TRADE_BUYER_OUTPUT_ORDER_ID = 3;
+
+        public static int INFO_SELLER_INFO_DETAIL_ID = 4;
+        public static int INFO_SELLER_INPUT_INFO_ID = 5;
+
+        public static int PROCESS_SELLER_INPUT_PROCESS_ID = 6;
+
+        public static int DISTRIBUTION_WAIT_DELIVER_ID = 7;
+        public static int DISTRIBUTION_DELIVERING_ID = 8;
+        public static int DISTRIBUTION_RESULT_ID = 9;
 
         public static String HOME_ICON = "home";
         public static String TRADE_ICON = "orders";
@@ -40,11 +52,22 @@ public class Switcher {
         public static String HELP_ICON = "help";
 
         public static List<Menu> BuyerSidePanel = Arrays.asList(
-                Menu.HOME, Menu.INFO_SELLER, Menu.TRADE_BUYER, Menu.PROCESS_BUYER,
-                Menu.DISTRIBUTION_BUYER, Menu.ANALYSIS_SELLER);
+                Menu.HOME, Menu.INFO_SELLER, Menu.TRADE_BUYER, Menu.PROCESS,
+                Menu.DISTRIBUTION, Menu.ANALYSIS_SELLER);
 
         public static List<Menu> SellerSidePanel = Arrays.asList(
-                Menu.HOME, Menu.TRADE_SELLER, Menu.PROCESS_SELLER,
-                Menu.DISTRIBUTION_SELLER, Menu.ANALYSIS_SELLER, Menu.FRAMEWORK);
+                Menu.HOME, Menu.TRADE_SELLER, Menu.PROCESS,
+                Menu.DISTRIBUTION, Menu.ANALYSIS_SELLER, Menu.FRAMEWORK);
+    }
+
+    public static class OrderSwitcher{
+        public static int ORDER_STATUS_BUYER_SELECT = 0;
+        public static int ORDER_STATUS_BUYER_CONFIRM = 1;
+        public static int ORDER_STATUS_SELLER_CONFIRM = 2;
+        public static int ORDER_STATUS_SELLER_REJECT = 3;
+        public static int ORDER_STATUS_SELLER_PREPARING = 4;
+        public static int ORDER_STATUS_SELLER_DELIVER = 5;
+        public static int ORDER_STATUS_BUYER_RECEIVE = 6;
+        public static int ORDER_STATUS_BUYER_REJECT = 7;
     }
 }
