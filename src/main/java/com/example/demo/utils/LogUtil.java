@@ -75,4 +75,13 @@ public class LogUtil {
         write(Switcher.FilePathSwitcher.exception_log_path, exception);
         write(Switcher.FilePathSwitcher.exception_digest_log_path, digestException);
     }
+
+    public static void log(String location, String info) {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        String time = "[" + TimeUtil.getTime() + "]\n";
+        location += "\n";
+        String out = time + location + info;
+        write(Switcher.FilePathSwitcher.log_path, out);
+    }
 }
