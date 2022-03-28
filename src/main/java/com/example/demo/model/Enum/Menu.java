@@ -21,7 +21,7 @@ public enum Menu {
             SubMenu.INFO_SELLER_INFO_DETAIL,
             SubMenu.INFO_SELLER_INPUT_INFO)),
 
-    DISTRIBUTION(MenuSwitcher.DISTRIBUTION_ID, "", "物流", MenuSwitcher.DISTRIBUTION_ICON, Arrays.asList(
+    DISTRIBUTION(MenuSwitcher.DISTRIBUTION_ID, "#", "物流", MenuSwitcher.DISTRIBUTION_ICON, Arrays.asList(
             SubMenu.DISTRIBUTION_WAIT_DELIVER,
             SubMenu.DISTRIBUTION_DELIVERING,
             SubMenu.DISTRIBUTION_RESULT)),

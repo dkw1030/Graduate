@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
-import com.example.demo.model.DTO.ResultDTO;
 import com.example.demo.model.DTO.CheckAccountDTO;
+import com.example.demo.model.DTO.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.service.lower.AccountService;
 import com.example.demo.utils.LogUtil;
@@ -13,17 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class AccountController {
+public class InfoSellerController {
+//
+//    @Autowired
+//    DataSource dataSource;
 
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/login")
-    public String loginLayout(Model model){
-        return "account/login";
-    }
 
-    @RequestMapping("/user/login")
+    @RequestMapping("/t")
     public String login(@RequestParam("userId") int id,
                         @RequestParam("password") String password,
                         Model model){

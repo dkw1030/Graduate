@@ -20,11 +20,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**使用例子
- * ReadExcel excel = new ReadExcel("D:\\myexcel.xlsx");
- * String[] firstLine = excel.readLine(0);//得到第一行数据
- * String[] firstLine = excel.readLine(1);//得到第二行数据
- */
 public class FileUtil {
 
     public static List<List<String>> ReadExcel(String excelPath) throws Exception {

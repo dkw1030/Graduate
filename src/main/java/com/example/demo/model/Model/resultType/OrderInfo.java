@@ -6,6 +6,10 @@ import java.util.Date;
 
 @Data
 public class OrderInfo {
+    /**
+     * 订单名或订单描述
+     */
+    private String orderStr;
 
     /**
      * 订单id
