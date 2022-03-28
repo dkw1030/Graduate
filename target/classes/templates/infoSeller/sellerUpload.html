@@ -21,16 +21,46 @@
 </head>
 
 <body class="app">
+
 <header class="app-header fixed-top">
     <div th:replace="common/header::header"></div>
     <div th:replace="common/sidepanel::sidepanel(${sidePanel})"></div>
 </header><!--//app-header-->
 
 <div class="app-wrapper">
-
     <div class="app-content pt-3 p-md-3 p-lg-4">
-        <div class="container-xl">
+        <div class="row container-xl">
+            <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+                <div class="d-flex flex-column align-content-end">
+                    <div class="app-auth-body mx-auto">
+                        <h2 class="auth-heading text-center mb-5">上传供应商信息</h2>
+                        <div class="auth-form-container text-left">
+                            <form method="post"  class="auth-form login-form" action="/upload" enctype="multipart/form-data">
+                                <br>
+                                <p><input type="file" name="file" ></p>
+                                <br>
+                                <br th:if="${msg == null}">
+                                <p><span  th:text="${msg}"></span></p>
+                                <div class="text-center">
+                                    <button type="submit" class="btn app-btn-primary btn-block theme-btn mx-auto">提交</button>
+                                </div>
+                            </form>
+                        </div><!--//auth-form-container-->
 
+                    </div><!--//auth-body-->
+                </div><!--//flex-column-->
+            </div><!--//auth-main-col-->
+            <div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+                <div class="auth-background-overlay p-3 p-lg-5">
+                    <div class="d-flex flex-column align-content-end h-100">
+                        <br>
+                        <div class="overlay-content p-3 p-lg-4 rounded">
+                            <h5 class="mb-3 overlay-title">将新的供应商信息上传至平台！</h5>
+                            <div>上传新的供应商信息，为大家提供新的选择。上传信息后会自动创建供应商架构并且为供应商所有员工创建初始账号。对供应商信息进行统一管理，为供应商评价提供参考依据，为供应商提供参与系统的基础。</div>
+                        </div>
+                    </div>
+                </div><!--//auth-background-overlay-->
+            </div><!--//auth-background-col-->
         </div>
     </div><!--//app-content-->
 

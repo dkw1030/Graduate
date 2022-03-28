@@ -34,7 +34,7 @@ public class InfoSellerController {
 
     @RequestMapping("/inputSeller")
     public String loginLayout(Model model){
-        model.addAttribute("fileName", "Order.xlsx");
+//        model.addAttribute("fileName", "Order.xlsx");
 
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
@@ -46,22 +46,38 @@ public class InfoSellerController {
         return "infoSeller/sellerUpload";
     }
 
+    @RequestMapping("/info")
+    public String infoSeller(Model model){
+
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_INFO_DETAIL_ID);
+
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+
+        return "infoSeller/info";
+    }
+
     //单一文件上传
     @RequestMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_INPUT_INFO_ID);
+
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+
         String msg="";
         try {
             if(file.isEmpty()){
                 model.addAttribute("msg","上传失败，请选择文件！");
-                return "account/login";
+                return "infoSeller/sellerUpload";
             }
             String filename = file.getOriginalFilename();
             String filePath = "D:\\Project\\FileArea\\path2\\";
 
-            //避免文件重复覆盖
-            String uuid= UUID.randomUUID().toString().replaceAll("-", "");
-            //时间戳分类文件
-            String time = new SimpleDateFormat("YYYY-MM").format(new Date());
 
             String realPath = filePath + filename;
             File dest = new File(realPath);
@@ -77,7 +93,7 @@ public class InfoSellerController {
             e.printStackTrace();
         }
         model.addAttribute("msg","文件上传成功！");
-        return "account/login";
+        return "infoSeller/sellerUpload";
 
     }
 
