@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Constant.Switcher;
+import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.service.lower.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +35,15 @@ public class InfoSellerController {
     @RequestMapping("/inputSeller")
     public String loginLayout(Model model){
         model.addAttribute("fileName", "Order.xlsx");
-        return "infoSeller/fileUpDown";
+
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_INPUT_INFO_ID);
+
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+
+        return "infoSeller/sellerUpload";
     }
 
     //单一文件上传
@@ -43,18 +53,17 @@ public class InfoSellerController {
         try {
             if(file.isEmpty()){
                 model.addAttribute("msg","上传失败，请选择文件！");
-                return "index";
+                return "account/login";
             }
             String filename = file.getOriginalFilename();
-            //String filePath = request.getServletContext().getRealPath("/upload");
-            String filePath = ResourceUtils.getURL("classpath:").getPath()+"static/";
+            String filePath = "D:\\Project\\FileArea\\path2\\";
 
             //避免文件重复覆盖
             String uuid= UUID.randomUUID().toString().replaceAll("-", "");
             //时间戳分类文件
             String time = new SimpleDateFormat("YYYY-MM").format(new Date());
 
-            String realPath = filePath+time+"/"+uuid+filename;
+            String realPath = filePath + filename;
             File dest = new File(realPath);
 //            LogUtil.log("infoSellerController uploadFile", realPath);
             //检测是否存在目录，无，则创建
@@ -91,5 +100,7 @@ public class InfoSellerController {
 
         FileCopyUtils.copy(is,os);
     }
+
+
 
 }

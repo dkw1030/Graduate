@@ -18,12 +18,12 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/login")
+    @RequestMapping("")
     public String loginLayout(Model model){
         return "account/login";
     }
 
-    @RequestMapping("/user/login")
+    @RequestMapping("/login")
     public String login(@RequestParam("userId") int id,
                         @RequestParam("password") String password,
                         Model model){
