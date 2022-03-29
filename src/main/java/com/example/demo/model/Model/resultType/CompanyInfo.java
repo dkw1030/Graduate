@@ -7,7 +7,7 @@ public class CompanyInfo {
     /**
      * 公司id
      */
-    private int companyId;
+    private String companyId;
 
     /**
      * 公司名

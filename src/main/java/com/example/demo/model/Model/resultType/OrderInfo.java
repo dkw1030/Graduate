@@ -14,17 +14,17 @@ public class OrderInfo {
     /**
      * 订单id
      */
-    private int orderId;
+    private String orderId;
 
     /**
      * 供应商
      */
-    private int sellerId;
+    private String sellerId;
 
     /**
      * 采购员
      */
-    private int buyerId;
+    private String buyerId;
 
     /**
      * 状态

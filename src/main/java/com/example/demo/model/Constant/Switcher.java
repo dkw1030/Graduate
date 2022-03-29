@@ -24,8 +24,7 @@ public class Switcher {
         public static int TRADE_BUYER_ID = 1;
         public static int TRADE_SELLER_ID = 2;
         public static int INFO_SELLER_ID = 3;
-        public static int PROCESS_BUYER_ID = 9;
-        public static int PROCESS_SELLER_ID = 10;
+        public static int PROCESS_ID = 10;
         public static int DISTRIBUTION_ID = 4;
         public static int ANALYSIS_SELLER_ID = 6;
         public static int FRAMEWORK_ID = 7;
@@ -34,10 +33,9 @@ public class Switcher {
 
         public static int TRADE_BUYER_ORDER_DETAIL_ID = 1;
         public static int TRADE_BUYER_INPUT_ORDER_ID = 2;
-        //public static int TRADE_BUYER_OUTPUT_ORDER_ID = 3;
 
-        public static int INFO_SELLER_INFO_DETAIL_ID = 4;
-        public static int INFO_SELLER_INPUT_INFO_ID = 5;
+        public static int INFO_SELLER_SELLER_DETAIL_ID = 4;
+        public static int INFO_SELLER_UPLOAD_SELLER_ID = 5;
 
         public static int PROCESS_SELLER_INPUT_PROCESS_ID = 6;
 

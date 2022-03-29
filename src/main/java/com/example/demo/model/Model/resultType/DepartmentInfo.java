@@ -7,12 +7,12 @@ public class DepartmentInfo {
     /**
      * 公司id
      */
-    private int companyId;
+    private String companyId;
 
     /**
      * 部门id
      */
-    private int departmentId;
+    private String departmentId;
 
     /**
      * 部门名

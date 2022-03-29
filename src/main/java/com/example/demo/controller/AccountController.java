@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
-import com.example.demo.model.DTO.ResultDTO;
+import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.service.Upper.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;

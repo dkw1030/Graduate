@@ -7,7 +7,7 @@ public class User {
     /**
      * 主键，每人唯一独立标志
      */
-    private int userId;
+    private String userId;
 
     /**
      * 角色：
@@ -31,14 +31,14 @@ public class User {
     private String userName;
 
     /**
-     * 公司id，角色（0）不存在为负
+     * 公司id，角色（0）不存在为空
      */
-    private int companyId;
+    private String companyId;
 
     /**
-     * 部门id，角色（0，1）不存在为负
+     * 部门id，角色（0，1）不存在为空
      */
-    private int departmentId;
+    private String departmentId;
 
     /**
      * 电子邮箱

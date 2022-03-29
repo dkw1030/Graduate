@@ -7,7 +7,7 @@ public class item {
     /**
      * 订单号
      */
-    private int orderId;
+    private String orderId;
 
     /**
      * 数量

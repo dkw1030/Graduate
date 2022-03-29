@@ -1,7 +1,9 @@
 package com.example.demo.service.Upper;
 
 import com.example.demo.model.Constant.Switcher;
-import com.example.demo.model.DTO.ResultDTO;
+import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.Company;
+import com.example.demo.model.Model.resultType.CompanyInfo;
 import com.example.demo.service.lower.InfoSellerBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
@@ -35,6 +37,7 @@ public class InfoSellerService {
             code = -2;
             //文件转数据
             List<List<String>> data = FileUtil.ReadExcel(file.getPath());
+
             //核验数据是否有误
             ResultDTO<String> checkResult = checkCompanyData(data);
             if(checkResult.getCode() < 0){
@@ -42,6 +45,12 @@ public class InfoSellerService {
                 resultDTO.setData(checkResult.getData());
                 return resultDTO;
             }
+            //对data进行处理
+            LogUtil.log(location, FileUtil.outData(data));
+            ResultDTO<String> insertResult = infoSellerBasicService.uploadSeller(data);
+
+
+
         } catch (Exception e) {
             resultDTO.setData("文件上传失败");
             LogUtil.errorLog(e, location + getClass().getName(), code);

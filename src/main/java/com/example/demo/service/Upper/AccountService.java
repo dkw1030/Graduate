@@ -1,7 +1,7 @@
 package com.example.demo.service.Upper;
 
 import com.example.demo.mapper.AccountMapper;
-import com.example.demo.model.DTO.ResultDTO;
+import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
