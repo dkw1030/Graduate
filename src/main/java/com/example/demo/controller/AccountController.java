@@ -27,28 +27,22 @@ public class AccountController {
     public String login(@RequestParam("userId") int id,
                         @RequestParam("password") String password,
                         Model model){
-        int code = -1;
-        try{
-            //查询是否存在用户以及密码是否正确
-            ResultDTO<CheckAccountDTO> resultDTO = accountService.login(id, password);
-            code = resultDTO.getCode();
-            if(code == 1){
-                model.addAttribute("errorText", resultDTO.getData().getResult());
-                return "account/login";
-            }else if(code == 0){
-                //查询用户信息
+        //查询是否存在用户以及密码是否正确
+        ResultDTO<CheckAccountDTO> resultDTO = accountService.login(id, password);
+        int code = resultDTO.getCode();
+        if(code == 1){
+            model.addAttribute("errorText", resultDTO.getData().getResult());
+            return "account/login";
+        }else if(code == 0){
+            //查询用户信息
 
-                SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-                sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-                sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
+            SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+            sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
 
-                model.addAttribute("sidePanel", sidePanelStatusDTO);
-                return "main/home";
-            }else{
-                throw new Exception();
-            }
-        }catch(Exception e){
-            LogUtil.errorLog(e,"login controller");
+            model.addAttribute("sidePanel", sidePanelStatusDTO);
+            return "main/home";
+        }else{
             return "error/404";
         }
     }

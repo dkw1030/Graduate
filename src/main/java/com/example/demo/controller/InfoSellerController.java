@@ -3,6 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.service.lower.AccountService;
+import com.example.demo.utils.FileUtil;
+import com.example.demo.utils.LogUtil;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -57,6 +61,36 @@ public class InfoSellerController {
         model.addAttribute("sidePanel", sidePanelStatusDTO);
 
         return "infoSeller/info";
+    }
+
+    @RequestMapping("/sellerUpload")
+    public String inputSeller(@RequestParam("file") MultipartFile multipartFile, Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_INPUT_INFO_ID);
+
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+
+        String msg="";
+        int code = -1;
+        try {
+            if(multipartFile.isEmpty()){
+                model.addAttribute("msg","上传失败，请选择文件！");
+                return "infoSeller/sellerUpload";
+            }
+            File file = new File(Switcher.FilePathSwitcher.cloud_file_path_company + multipartFile.getOriginalFilename());
+            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
+            code = -2;
+            List<List<String>> data = FileUtil.ReadExcel(file.getPath());
+//            LogUtil.log("infoSellerController inputSeller", FileUtil.outData(data));
+        } catch (Exception e) {
+            model.addAttribute("msg", "文件上传失败");
+            LogUtil.errorLog(e, "infoSellerController inputSeller", code);
+        }
+        model.addAttribute("msg","文件上传成功！");
+        return "infoSeller/sellerUpload";
+
     }
 
     //单一文件上传

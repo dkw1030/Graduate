@@ -10,6 +10,9 @@ public class Switcher {
         public static String log_path = "D:\\Project\\Logs\\Java\\Graduate\\log.txt";
         public static String exception_log_path = "D:\\Project\\Logs\\Java\\Graduate\\exception.txt";
         public static String exception_digest_log_path = "D:\\Project\\Logs\\Java\\Graduate\\digestException.txt";
+
+        public static String cloud_file_path_company = "D:\\Project\\FileArea\\Graduate\\Company\\";
+        public static String clout_file_path_order = "D:\\Project\\FileArea\\Graduate\\Order\\";
     }
 
     public static class MenuSwitcher{

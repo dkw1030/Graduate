@@ -134,14 +134,16 @@ public class FileUtil {
     }
 
 
-//    public static void out(List<List<String>> data){
-//        for (List<String> datum : data) {
-//            for (String s : datum) {
-//                System.out.print(s);
-//            }
-//            System.out.println();
-//        }
-//    }
+    public static String outData(List<List<String>> data){
+        String str = "";
+        for (List<String> datum : data) {
+            for (String s : datum) {
+                str += s;
+            }
+            str+="\n";
+        }
+        return str;
+    }
 //    public static void main(String[] args) throws Exception {
 //        List<List<String>> data = ReadExcel("D:\\Project\\FileArea\\path1\\1.xlsx");
 //        out(data);
