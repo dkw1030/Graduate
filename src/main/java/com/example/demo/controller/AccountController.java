@@ -2,10 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.ResultDTO;
-import com.example.demo.model.DTO.CheckAccountDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
-import com.example.demo.service.lower.AccountService;
-import com.example.demo.utils.LogUtil;
+import com.example.demo.service.Upper.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +26,10 @@ public class AccountController {
                         @RequestParam("password") String password,
                         Model model){
         //查询是否存在用户以及密码是否正确
-        ResultDTO<CheckAccountDTO> resultDTO = accountService.login(id, password);
+        ResultDTO<String> resultDTO = accountService.login(id, password);
         int code = resultDTO.getCode();
         if(code == 1){
-            model.addAttribute("errorText", resultDTO.getData().getResult());
+            model.addAttribute("errorText", resultDTO.getData());
             return "account/login";
         }else if(code == 0){
             //查询用户信息

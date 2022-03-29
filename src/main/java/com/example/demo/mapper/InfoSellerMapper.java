@@ -1,4 +1,15 @@
 package com.example.demo.mapper;
 
-public class InfoSellerMapper {
+import com.example.demo.model.DemoModel;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+
+
+@Mapper
+@Repository
+public interface InfoSellerMapper {
+
 }

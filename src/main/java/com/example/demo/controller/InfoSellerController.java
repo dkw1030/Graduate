@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
+import com.example.demo.model.DTO.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
-import com.example.demo.service.lower.AccountService;
+import com.example.demo.service.Upper.AccountService;
+import com.example.demo.service.Upper.InfoSellerService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
 import org.apache.commons.io.FileUtils;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,16 +24,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class InfoSellerController {
 
     @Autowired
-    private AccountService accountService;
+    private InfoSellerService infoSellerService;
 
 
 
@@ -71,26 +69,12 @@ public class InfoSellerController {
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_INPUT_INFO_ID);
 
         model.addAttribute("sidePanel", sidePanelStatusDTO);
-
-        String msg="";
-        int code = -1;
-        try {
-            if(multipartFile.isEmpty()){
-                model.addAttribute("msg","上传失败，请选择文件！");
-                return "infoSeller/sellerUpload";
-            }
-            File file = new File(Switcher.FilePathSwitcher.cloud_file_path_company + multipartFile.getOriginalFilename());
-            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
-            code = -2;
-            List<List<String>> data = FileUtil.ReadExcel(file.getPath());
-//            LogUtil.log("infoSellerController inputSeller", FileUtil.outData(data));
-        } catch (Exception e) {
-            model.addAttribute("msg", "文件上传失败");
-            LogUtil.errorLog(e, "infoSellerController inputSeller", code);
+        ResultDTO<String> resultDTO = infoSellerService.uploadSellerInfo(multipartFile);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
         }
-        model.addAttribute("msg","文件上传成功！");
+        model.addAttribute("msg", resultDTO.getData());
         return "infoSeller/sellerUpload";
-
     }
 
     //单一文件上传
