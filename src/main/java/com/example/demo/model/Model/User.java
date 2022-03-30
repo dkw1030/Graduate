@@ -18,7 +18,7 @@ public class User {
      * 2    部门主管
      * 3    普通员工
      */
-    private int role;
+    private int userRole;
 
     /**
      * 电话

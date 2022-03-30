@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface InfoSellerMapper {
     int insertCompany(CompanyInfo company);
-    int insertUser(List<User> users);
+    int insertUserBasic(List<User> users);
     int insertDepartment(List<DepartmentInfo> departments);
 }

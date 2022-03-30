@@ -52,6 +52,7 @@ public class InfoSellerService {
 
 
         } catch (Exception e) {
+            e.printStackTrace();
             resultDTO.setData("文件上传失败");
             LogUtil.errorLog(e, location + getClass().getName(), code);
         }

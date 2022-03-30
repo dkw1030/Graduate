@@ -11,4 +11,32 @@
              value (#{companyId}, #{companyName}, #{companyDescription}, #{orderConfirmed}, #{orderRejected}, #{orderCompleted}, #{orderFailed})
     </insert>
 
+    <insert id="insertUserBasic" parameterType="java.util.List">
+        insert into users
+        ( userId, userRole, userName, companyId, departmentId)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.userId},
+            #{item.userRole},
+            #{item.userName},
+            #{item.companyId},
+            #{item.departmentId}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertDepartment" parameterType="java.util.List">
+        insert into department
+        (companyId, departmentId, departmentName)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.companyId},
+            #{item.departmentId},
+            #{item.departmentName}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

@@ -2,6 +2,7 @@ package com.example.demo.service.lower;
 
 import com.example.demo.mapper.InfoSellerMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.Department;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.CompanyInfo;
 import com.example.demo.model.Model.resultType.DepartmentInfo;
@@ -40,6 +41,8 @@ public class InfoSellerBasicService {
 
         List<DepartmentInfo> departmentInfos = new ArrayList<>();
         List<User> users = new ArrayList<>();
+        String lastDepartmentName = "";
+        String lastDepartmentId = "";
         for (int i = 5; i < data.size(); i++) {
             List<String> row = data.get(i);
             User user = new User();
@@ -47,35 +50,38 @@ public class InfoSellerBasicService {
             user.setUserName(row.get(0));
             user.setUserId(companyInfo.getCompanyId() + (i - 5));
             if(row.get(2).equals("老板")){
-                user.setRole(1);
+                user.setDepartmentId("0");
+                user.setUserRole(1);
                 users.add(user);
                 continue;
             }
-
-            DepartmentInfo departmentInfo = new DepartmentInfo();
-            departmentInfo.setDepartmentId(companyInfo.getCompanyId() + (i - 5));
-            departmentInfo.setCompanyId(companyInfo.getCompanyId());
-            departmentInfo.setDepartmentName(row.get(3));
-            departmentInfos.add(departmentInfo);
-
-            user.setDepartmentId(departmentInfo.getDepartmentId());
+            if(!row.get(3).equals(lastDepartmentName)){
+                DepartmentInfo departmentInfo = new DepartmentInfo();
+                lastDepartmentName = row.get(3);
+                lastDepartmentId = companyInfo.getCompanyId() + (i - 5);
+                departmentInfo.setDepartmentId(lastDepartmentId);
+                departmentInfo.setCompanyId(companyInfo.getCompanyId());
+                departmentInfo.setDepartmentName(row.get(3));
+                departmentInfos.add(departmentInfo);
+            }
+            user.setDepartmentId(lastDepartmentId);
             if(row.get(2).equals("主管")){
-                user.setRole(2);
+                user.setUserRole(2);
             }else{
-                user.setRole(3);
+                user.setUserRole(3);
             }
             users.add(user);
         }
-//        int departmentResult = infoSellerMapper.insertDepartment(departmentInfos);
-//        if(departmentResult != 1){
-//            resultDTO.setData("department insert error");
-//            return resultDTO;
-//        }
-//        int userResult = infoSellerMapper.insertUser(users);
-//        if(userResult != 1){
-//            resultDTO.setData("company insert error");
-//            return resultDTO;
-//        }
+        int departmentResult = infoSellerMapper.insertDepartment(departmentInfos);
+        if(departmentResult == 0){
+            resultDTO.setData("department insert error");
+            return resultDTO;
+        }
+        int userResult = infoSellerMapper.insertUserBasic(users);
+        if(userResult == 0){
+            resultDTO.setData("user insert error");
+            return resultDTO;
+        }
         resultDTO.setData("success");
         resultDTO.setCode(0);
         return resultDTO;
