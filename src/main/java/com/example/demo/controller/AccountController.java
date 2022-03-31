@@ -26,32 +26,31 @@ public class AccountController {
     public String login(@RequestParam("userId") long id,
                         @RequestParam("password") String password,
                         Model model){
-        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
-
-        //查询是否存在用户以及密码是否正确
-        ResultDTO<String> resultDTO = accountService.login(id, password);
-        int code = resultDTO.getCode();
-        if(code == 1){
-            model.addAttribute("errorText", resultDTO.getData());
+        ResultDTO<User> userResult = accountService.login(id, password);
+        int code = userResult.getCode();
+        if(code > 0){
+            String errorText;
+            if(code == 1){
+                errorText = "账号不存在";
+            }else if(code == 2){
+                errorText = "账号或密码不正确";
+            }else{
+                errorText = "unknown error code = " + code;
+            }
+            model.addAttribute("errorText", errorText);
             return "account/login";
-        }else if(code == 0){
-            //查询用户信息
-            ResultDTO<User> userResultDTO = accountService.getUser(id+"");
-            if(userResultDTO.getCode() != 0){
-                return "error/404";
-            }
-            User user = userResultDTO.getData();
-            if(user.getUserRole() != 0){
-                sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
-            }else {
+        } else if(code == 0){
+            SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+            sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.HOME_ID);
+            User user = userResult.getData();
+            if(user.getUserRole() == 0){
                 sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+            }else {
+                sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
             }
-
             model.addAttribute("sidePanel", sidePanelStatusDTO);
-            model.addAttribute("user", user);
             return "main/home";
-        }else{
+        } else {
             return "error/404";
         }
     }
