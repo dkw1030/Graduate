@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface AccountMapper {
-    String getPasswordById(int id);
+    String getPasswordById(String id);
 
 }

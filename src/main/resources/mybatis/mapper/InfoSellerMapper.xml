@@ -12,7 +12,7 @@
     </insert>
 
     <insert id="insertUserBasic" parameterType="java.util.List">
-        insert into users
+        replace into users
         ( userId, userRole, userName, companyId, departmentId)
         values
         <foreach collection="list" item="item" separator=",">
@@ -27,7 +27,7 @@
     </insert>
 
     <insert id="insertDepartment" parameterType="java.util.List">
-        insert into department
+        replace into department
         (companyId, departmentId, departmentName)
         values
         <foreach collection="list" item="item" index="index" separator=",">
@@ -35,6 +35,18 @@
             #{item.companyId},
             #{item.departmentId},
             #{item.departmentName}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertAccount" parameterType="java.util.List">
+        replace into account
+        (userId, password)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.userId},
+            "1"
             )
         </foreach>
     </insert>

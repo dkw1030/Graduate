@@ -11,13 +11,13 @@ public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
 
-    public ResultDTO<String> login(int id, String password){
+    public ResultDTO<String> login(long id, String password){
         ResultDTO<String> resultDTO= new ResultDTO<>();
         String actrualPassword;
         //首先进行账号验证
         resultDTO.setCode(-1);
         try{
-            actrualPassword = accountMapper.getPasswordById(id);
+            actrualPassword = accountMapper.getPasswordById(id+"");
             resultDTO.setCode(1);
             if(actrualPassword == null){
                 resultDTO.setData("账号不存在");

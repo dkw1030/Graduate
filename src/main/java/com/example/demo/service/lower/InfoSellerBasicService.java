@@ -82,6 +82,11 @@ public class InfoSellerBasicService {
             resultDTO.setData("user insert error");
             return resultDTO;
         }
+        int accountResult = infoSellerMapper.insertAccount(users);
+        if(accountResult == 0){
+            resultDTO.setData("account insert error");
+            return resultDTO;
+        }
         resultDTO.setData("success");
         resultDTO.setCode(0);
         return resultDTO;

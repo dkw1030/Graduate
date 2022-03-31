@@ -22,7 +22,7 @@ public class AccountController {
     }
 
     @RequestMapping("/login")
-    public String login(@RequestParam("userId") int id,
+    public String login(@RequestParam("userId") long id,
                         @RequestParam("password") String password,
                         Model model){
         //查询是否存在用户以及密码是否正确
