@@ -46,11 +46,7 @@ public class InfoSellerService {
                 return resultDTO;
             }
             //对data进行处理
-            LogUtil.log(location, FileUtil.outData(data));
             ResultDTO<String> insertResult = infoSellerBasicService.uploadSeller(data);
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
             resultDTO.setData("文件上传失败");

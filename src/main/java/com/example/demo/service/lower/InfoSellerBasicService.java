@@ -6,6 +6,7 @@ import com.example.demo.model.Model.Department;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.CompanyInfo;
 import com.example.demo.model.Model.resultType.DepartmentInfo;
+import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
 import com.example.demo.utils.TimeUtil;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Service
 public class InfoSellerBasicService {
+
     @Autowired
     InfoSellerMapper infoSellerMapper;
 
@@ -72,21 +74,13 @@ public class InfoSellerBasicService {
             }
             users.add(user);
         }
+        LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
         int departmentResult = infoSellerMapper.insertDepartment(departmentInfos);
-        if(departmentResult == 0){
-            resultDTO.setData("department insert error");
-            return resultDTO;
-        }
+        LogUtil.log(getClass().getName(), "department insert finish\n" + departmentResult);
         int userResult = infoSellerMapper.insertUserBasic(users);
-        if(userResult == 0){
-            resultDTO.setData("user insert error");
-            return resultDTO;
-        }
+        LogUtil.log(getClass().getName(), "user insert finish\n" + userResult);
         int accountResult = infoSellerMapper.insertAccount(users);
-        if(accountResult == 0){
-            resultDTO.setData("account insert error");
-            return resultDTO;
-        }
+        LogUtil.log(getClass().getName(), "account insert finish\n" + accountResult);
         resultDTO.setData("success");
         resultDTO.setCode(0);
         return resultDTO;
