@@ -2,6 +2,7 @@ package com.example.demo.service.Upper;
 
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.User;
 import com.example.demo.utils.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,19 @@ public class AccountService {
         }catch (Exception e){
             LogUtil.errorLog(e, "login service", resultDTO.getCode());
         }
+        return resultDTO;
+    }
+
+    public ResultDTO<User> getUser(String id){
+        ResultDTO<User> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            User user = accountMapper.getUserById(id);
+            resultDTO.setData(user);
+        }catch (Exception e){
+            return resultDTO;
+        }
+        resultDTO.setCode(0);
         return resultDTO;
     }
 

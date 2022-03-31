@@ -9,4 +9,8 @@
         select password from account where userId = #{id}
     </select>
 
+    <select id="getUserById" resultType="com.example.demo.model.Model.User">
+        select * from users where userId = #{id}
+    </select>
+
 </mapper>
