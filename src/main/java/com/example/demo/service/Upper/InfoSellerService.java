@@ -17,8 +17,6 @@ import java.util.List;
 
 @Service
 public class InfoSellerService {
-    private final String location = "Service Upper InfoSellerService ";
-
     @Autowired
     InfoSellerBasicService infoSellerBasicService;
 
@@ -50,7 +48,7 @@ public class InfoSellerService {
         } catch (Exception e) {
             e.printStackTrace();
             resultDTO.setData("文件上传失败");
-            LogUtil.errorLog(e, location + getClass().getName(), code);
+            LogUtil.errorLog(e, getClass().getName(), code);
         }
         resultDTO.setCode(0);
         resultDTO.setData("上传成功");
