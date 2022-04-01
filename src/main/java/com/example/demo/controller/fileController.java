@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 @Controller
-public class FileController {
+public class fileController {
 
     @Autowired
     private InfoSellerService infoSellerService;

@@ -41,14 +41,16 @@ public class AccountController {
             return "account/login";
         } else if(code == 0){
             SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-            sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.HOME_ID);
+            sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
             User user = userResult.getData();
+            sidePanelStatusDTO.setUserId(id+"");
             if(user.getUserRole() == 0){
                 sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
             }else {
                 sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
             }
             model.addAttribute("sidePanel", sidePanelStatusDTO);
+            model.addAttribute("user", user);
             return "main/home";
         } else {
             return "error/404";

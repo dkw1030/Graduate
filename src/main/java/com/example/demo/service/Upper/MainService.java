@@ -1,6 +1,5 @@
 package com.example.demo.service.Upper;
 
-import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.lower.AccountBasicService;
@@ -9,25 +8,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AccountService {
-    @Autowired
-    private AccountBasicService accountBasicService;
+public class MainService {
 
-    public ResultDTO<User> login(long id, String password){
+    @Autowired
+    AccountBasicService accountBasicService;
+
+    public ResultDTO<User> mainPage(String userId){
         ResultDTO<User> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
-        try {
-            ResultDTO<String> accountResult = accountBasicService.login(id, password);
-            resultDTO.setCode(accountResult.getCode());
-            if(resultDTO.getCode() > 0){
-                return resultDTO;
-            }
-            resultDTO = accountBasicService.getUserById(id+"");
+        User user = null;
+        try{
+            ResultDTO<User> userResult = accountBasicService.getUserById(userId);
+            user = userResult.getData();
         }catch (Exception e){
             LogUtil.errorLog(e, getClass().getName());
         }
+        resultDTO.setCode(0);
+        resultDTO.setData(user);
         return resultDTO;
     }
 
 }
-

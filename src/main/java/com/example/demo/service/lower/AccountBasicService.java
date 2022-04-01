@@ -31,7 +31,7 @@ public class AccountBasicService {
         return resultDTO;
     }
 
-    public ResultDTO<User> getUser(String id) throws Exception{
+    public ResultDTO<User> getUserById(String id) throws Exception{
         ResultDTO<User> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
         User user = accountMapper.getUserById(id);

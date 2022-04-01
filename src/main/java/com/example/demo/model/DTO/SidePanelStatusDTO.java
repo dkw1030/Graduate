@@ -10,4 +10,5 @@ public class SidePanelStatusDTO {
     int curMenu;
     int curSubMenu;
     List<Menu> sidePanel;
+    String userId;
 }

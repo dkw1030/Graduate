@@ -21,8 +21,8 @@
 </head> 
 
 <body class="app">   	
-    <header class="app-header fixed-top">	   	            
-        <div th:replace="common/header::header"></div>
+    <header class="app-header fixed-top">
+		<div th:replace="common/header::header(${user})"></div>
 		<div th:replace="common/sidepanel::sidepanel(${sidePanel})"></div>
     </header><!--//app-header-->
     

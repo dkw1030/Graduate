@@ -3,7 +3,7 @@ package com.example.demo.model.Enum;
 import com.example.demo.model.Constant.Switcher;
 
 public enum SubMenu {
-    TRADE_BUYER_ORDER_DETAIL(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID, "", "订单详情"),
+    TRADE_BUYER_ORDER_DETAIL(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID, "/tradeBuyer", "订单详情"),
     TRADE_BUYER_INPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_INPUT_ORDER_ID, "", "导入订单"),
     //TRADE_BUYER_OUTPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_OUTPUT_ORDER_ID, "", "导出订单"),
 

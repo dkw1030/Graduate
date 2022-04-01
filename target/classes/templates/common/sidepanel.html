@@ -13,7 +13,7 @@
             <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                 <li class="nav-item"  th:each="item:${status.getSidePanel()}">
                     <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                    <a class="nav-link" th:classappend="${item.id==status.getCurMenu()?'active':''}" th:href="${item.url}"
+                    <a class="nav-link" th:classappend="${item.id==status.getCurMenu()?'active':''}" th:href="${item.url+'/'+status.getUserId()}"
                        th:attrappend="aria-expanded=${item.subMenus.size()==0?'':(item.id==status.getCurMenu()?'true':'false')}
                        ,data-toggle=${item.subMenus.size()>0?'collapse':''}
                        ,data-target=${item.subMenus.size()>0?'#submenu-'+item.id:''}
@@ -35,7 +35,7 @@
                                 <li class="submenu-item">
                                     <a class="submenu-link"
                                        th:classappend="${submenu.id==status.getCurSubMenu()?'active':''}"
-                                       th:href="${submenu.url}" th:text="${submenu.title}"></a>
+                                       th:href="${submenu.url+'/'+status.getUserId()}" th:text="${submenu.title}"></a>
                                 </li>
                             </div>
                         </ul>

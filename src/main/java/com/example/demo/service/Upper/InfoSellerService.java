@@ -3,7 +3,9 @@ package com.example.demo.service.Upper;
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.Company;
+import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.CompanyInfo;
+import com.example.demo.service.lower.AccountBasicService;
 import com.example.demo.service.lower.InfoSellerBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
@@ -19,6 +21,10 @@ import java.util.List;
 public class InfoSellerService {
     @Autowired
     InfoSellerBasicService infoSellerBasicService;
+
+
+    @Autowired
+    private AccountBasicService accountBasicService;
 
     public ResultDTO<String> uploadSellerInfo(MultipartFile multipartFile){
         ResultDTO<String> resultDTO = new ResultDTO<>();
@@ -59,6 +65,18 @@ public class InfoSellerService {
         ResultDTO<String> resultDTO = new ResultDTO<>();
         resultDTO.setCode(0);
         resultDTO.setData("成功");
+        return resultDTO;
+    }
+
+    public ResultDTO<User> infoSellerPage(String userId){
+        ResultDTO<User> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            resultDTO = accountBasicService.getUserById(userId);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+            return resultDTO;
+        }
         return resultDTO;
     }
 }
