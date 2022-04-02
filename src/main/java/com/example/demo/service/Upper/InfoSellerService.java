@@ -2,10 +2,11 @@ package com.example.demo.service.Upper;
 
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.Result.ResultDTO;
-import com.example.demo.model.Model.Company;
+import com.example.demo.model.DTO.SellerListDTO;
+import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
-import com.example.demo.model.Model.resultType.CompanyInfo;
 import com.example.demo.service.lower.AccountBasicService;
+import com.example.demo.service.lower.CompanyBasicService;
 import com.example.demo.service.lower.InfoSellerBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
@@ -21,6 +22,9 @@ import java.util.List;
 public class InfoSellerService {
     @Autowired
     InfoSellerBasicService infoSellerBasicService;
+
+    @Autowired
+    CompanyBasicService companyBasicService;
 
 
     @Autowired
@@ -68,15 +72,29 @@ public class InfoSellerService {
         return resultDTO;
     }
 
-    public ResultDTO<User> infoSellerPage(String userId){
-        ResultDTO<User> resultDTO = new ResultDTO<>();
+    public ResultDTO<SellerListDTO> sellerListPage(String userId){
+        ResultDTO<SellerListDTO> resultDTO = new ResultDTO<>();
+        SellerListDTO sellerListDTO = new SellerListDTO();
         resultDTO.setCode(-1);
         try{
-            resultDTO = accountBasicService.getUserById(userId);
+            ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
+            System.out.println("1");
+            ResultDTO<List<CompanyOverView>> companyResultDTO = companyBasicService.getAllCompany();
+            System.out.println("2");
+            sellerListDTO.setUser(userResultDTO.getData());
+            sellerListDTO.setCompanyOverViewList(companyResultDTO.getData());
+            resultDTO.setData(sellerListDTO);
+
+            String out = "";
+            for (CompanyOverView company:
+                 companyResultDTO.getData()) {
+                out += company.getCompanyId() + "\n";
+            }
+            LogUtil.log(getClass().getName(), out);
         }catch (Exception e){
             LogUtil.errorLog(e, getClass().getName());
-            return resultDTO;
         }
+        resultDTO.setCode(0);
         return resultDTO;
     }
 }

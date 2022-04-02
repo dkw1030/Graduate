@@ -7,7 +7,7 @@ public enum SubMenu {
     TRADE_BUYER_INPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_INPUT_ORDER_ID, "", "导入订单"),
     //TRADE_BUYER_OUTPUT_ORDER(Switcher.MenuSwitcher.TRADE_BUYER_OUTPUT_ORDER_ID, "", "导出订单"),
 
-    INFO_SELLER_SELLER_DETAIL(Switcher.MenuSwitcher.INFO_SELLER_SELLER_DETAIL_ID, "/sellerDetail", "供应商详情"),
+    INFO_SELLER_SELLER_DETAIL(Switcher.MenuSwitcher.INFO_SELLER_SELLER_DETAIL_ID, "/sellerList", "供应商详情"),
     INFO_SELLER_UPLOAD_SELLER(Switcher.MenuSwitcher.INFO_SELLER_UPLOAD_SELLER_ID, "/upload", "导入供应商信息"),
 
     PROCESS_SELLER_INPUT_PROCESS(Switcher.MenuSwitcher.PROCESS_SELLER_INPUT_PROCESS_ID, "", "导入进度"),

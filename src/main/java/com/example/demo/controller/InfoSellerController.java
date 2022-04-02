@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.DTO.SellerListDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.model.Model.User;
+import com.example.demo.service.Upper.AccountService;
 import com.example.demo.service.Upper.InfoSellerService;
 import com.example.demo.service.lower.AccountBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ public class InfoSellerController {
     @Autowired
     private InfoSellerService infoSellerService;
 
-    @RequestMapping("/sellerDetail/{userId}")
+    @Autowired
+    private AccountService accountService;
+
+    @RequestMapping("/sellerList/{userId}")
     public String infoSeller( @PathVariable("userId") String userId, Model model){
 
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
@@ -29,15 +34,16 @@ public class InfoSellerController {
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_SELLER_DETAIL_ID);
         sidePanelStatusDTO.setUserId(userId);
 
-        ResultDTO<User> userResultDTO = infoSellerService.infoSellerPage(userId);
-        if(userResultDTO.getCode() < 0){
+        ResultDTO<SellerListDTO> pageResultDTO = infoSellerService.sellerListPage(userId);
+        if(pageResultDTO.getCode() < 0){
             return "error/404";
         }
 
-        model.addAttribute("user", userResultDTO.getData());
+        model.addAttribute("user", pageResultDTO.getData().getUser());
+        model.addAttribute("companyOverView", pageResultDTO.getData().getCompanyOverViewList());
         model.addAttribute("sidePanel", sidePanelStatusDTO);
 
-        return "infoSeller/sellerDetail";
+        return "infoSeller/sellerList";
     }
 
     @RequestMapping("/upload/{userId}")
@@ -49,7 +55,7 @@ public class InfoSellerController {
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_UPLOAD_SELLER_ID);
         sidePanelStatusDTO.setUserId(userId);
-        ResultDTO<User> userResultDTO = infoSellerService.infoSellerPage(userId);
+        ResultDTO<User> userResultDTO = accountService.getUserById(userId);
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }
@@ -74,7 +80,7 @@ public class InfoSellerController {
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
-        ResultDTO<User> userResultDTO = infoSellerService.infoSellerPage(userId);
+        ResultDTO<User> userResultDTO = accountService.getUserById(userId);
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }

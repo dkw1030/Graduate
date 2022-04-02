@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.DemoModel;
+import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.CompanyInfo;
 import com.example.demo.model.Model.resultType.DepartmentInfo;
@@ -16,4 +16,5 @@ public interface InfoSellerMapper {
     int insertUserBasic(List<User> users);
     int insertDepartment(List<DepartmentInfo> departments);
     int insertAccount(List<User> user);
+    List<CompanyOverView> getCompanyOverViewList();
 }

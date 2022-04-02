@@ -1,6 +1,5 @@
 package com.example.demo.service.Upper;
 
-import com.example.demo.mapper.AccountMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.lower.AccountBasicService;
@@ -23,6 +22,17 @@ public class AccountService {
                 return resultDTO;
             }
             resultDTO = accountBasicService.getUserById(id+"");
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<User> getUserById(String userId){
+        ResultDTO<User> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            resultDTO = accountBasicService.getUserById(userId);
         }catch (Exception e){
             LogUtil.errorLog(e, getClass().getName());
         }

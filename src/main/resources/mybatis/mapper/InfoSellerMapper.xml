@@ -7,8 +7,8 @@
 
     <insert id="insertCompany" parameterType="com.example.demo.model.Model.resultType.CompanyInfo">
         replace into company
-            (companyId, companyName, companyDescription, orderConfirmed, orderRejected, orderCompleted, orderFailed)
-             value (#{companyId}, #{companyName}, #{companyDescription}, #{orderConfirmed}, #{orderRejected}, #{orderCompleted}, #{orderFailed})
+            (companyId, companyName, companyDescription, orderConfirmed, orderRejected, orderCompleted, orderFailed, valid)
+             value (#{companyId}, #{companyName}, #{companyDescription}, #{orderConfirmed}, #{orderRejected}, #{orderCompleted}, #{orderFailed}, 1)
     </insert>
 
     <insert id="insertUserBasic" parameterType="java.util.List">
@@ -50,5 +50,19 @@
             )
         </foreach>
     </insert>
+
+<!--    <resultMap id="CompanyOverView" type="com.example.demo.model.Model.CompanyOverView">-->
+<!--        <result column="company.companyId" property="companyId"/>-->
+<!--        <result column="companyName" property="companyName"/>-->
+<!--        <result column="companyDescription" property="companyDescription"/>-->
+<!--        <result column="userName" property="boss"/>-->
+<!--        <result column="count" property="number"/>-->
+<!--        <result column="valid" property="valid"/>-->
+<!--    </resultMap>-->
+    <select id="getCompanyOverViewList" resultType="com.example.demo.model.Model.CompanyOverView">
+        SELECT company.companyId, companyName, companyDescription, userName, a.count,valid
+        FROM company, users, (select count(*) as count from company, users where company.companyId = users.companyId) as a
+        where company.companyId = users.companyId and users.userRole = 1;
+    </select>
 
 </mapper>

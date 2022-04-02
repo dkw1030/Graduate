@@ -16,6 +16,6 @@ public class distributionController {
 
         model.addAttribute("sidePanel", sidePanelStatusDTO);
 
-        return "infoSeller/sellerDetail";
+        return "infoSeller/sellerList";
     }
 }

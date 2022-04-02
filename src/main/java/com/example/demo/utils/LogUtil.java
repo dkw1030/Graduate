@@ -65,7 +65,7 @@ public class LogUtil {
         e.printStackTrace(pw);
         String info = sw.toString(); // stack trace as a string
         String time = "[" + TimeUtil.getTime() + "]\n";
-        String strCode = null;
+        String strCode = "";
         if(code != -100){
             strCode = code + "\n";
         }

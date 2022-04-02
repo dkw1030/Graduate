@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Company extends CompanyInfo {
+public class CompanyDetail extends CompanyInfo {
     /**
      *
      */
