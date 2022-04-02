@@ -46,7 +46,7 @@ public class InfoSellerController {
         return "infoSeller/sellerList";
     }
 
-    @RequestMapping("/upload/{userId}")
+    @RequestMapping("/uploadSeller/{userId}")
     public String loginLayout( @PathVariable("userId") String userId, Model model){
 //        model.addAttribute("fileName", "Order.xlsx");
 
@@ -67,7 +67,7 @@ public class InfoSellerController {
         return "infoSeller/uploadSeller";
     }
 
-    @RequestMapping("/uploadSeller/{userId}")
+    @RequestMapping("/uploadSellerAction/{userId}")
     public String inputSeller(@RequestParam("file") MultipartFile multipartFile, @PathVariable("userId") String userId, Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);

@@ -34,13 +34,6 @@ public class InfoSellerBasicService {
         companyInfo.setOrderRejected(Integer.parseInt(data.get(3).get(1)));
         companyInfo.setOrderCompleted(Integer.parseInt(data.get(3).get(2)));
         companyInfo.setOrderFailed(Integer.parseInt(data.get(3).get(3)));
-
-        int companyResult = infoSellerMapper.insertCompany(companyInfo);
-        if(companyResult != 1){
-            resultDTO.setData("company insert error");
-            return resultDTO;
-        }
-
         List<DepartmentInfo> departmentInfos = new ArrayList<>();
         List<User> users = new ArrayList<>();
         String lastDepartmentName = "";
@@ -75,6 +68,8 @@ public class InfoSellerBasicService {
             users.add(user);
         }
         LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
+        int companyResult = infoSellerMapper.insertCompany(companyInfo);
+        LogUtil.log(getClass().getName(), "company insert finish\n" + companyResult);
         int departmentResult = infoSellerMapper.insertDepartment(departmentInfos);
         LogUtil.log(getClass().getName(), "department insert finish\n" + departmentResult);
         int userResult = infoSellerMapper.insertUserBasic(users);
