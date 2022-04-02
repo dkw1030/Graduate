@@ -59,10 +59,23 @@
 <!--        <result column="count" property="number"/>-->
 <!--        <result column="valid" property="valid"/>-->
 <!--    </resultMap>-->
-    <select id="getCompanyOverViewList" resultType="com.example.demo.model.Model.CompanyOverView">
+    <select id="getAllCompanyOverViewList" resultType="com.example.demo.model.Model.CompanyOverView">
         SELECT company.companyId, companyName, companyDescription, userName, a.count,valid
         FROM company, users, (select count(*) as count from company, users where company.companyId = users.companyId) as a
         where company.companyId = users.companyId and users.userRole = 1;
+    </select>
+
+    <select id="getCompanyOverViewList" resultType="com.example.demo.model.Model.CompanyOverView">
+        SELECT company.companyId, companyName, companyDescription, userName, a.count,valid
+        FROM company, users, (select count(*) as count from company, users where company.companyId = users.companyId) as a
+        where company.companyId = users.companyId and users.userRole = 1
+        <if test="companyId != '' and companyId!=null">
+            and company.companyId = #{companyId}
+        </if>
+        <if test="companyName != '' and companyName!=null">
+            and company.companyName = #{companyName}
+        </if>
+        ;
     </select>
 
 </mapper>

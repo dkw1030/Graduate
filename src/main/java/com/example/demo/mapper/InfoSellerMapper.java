@@ -16,5 +16,6 @@ public interface InfoSellerMapper {
     int insertUserBasic(List<User> users);
     int insertDepartment(List<DepartmentInfo> departments);
     int insertAccount(List<User> user);
-    List<CompanyOverView> getCompanyOverViewList();
+    List<CompanyOverView> getAllCompanyOverViewList();
+    List<CompanyOverView> getCompanyOverViewList(String companyId, String companyName);
 }

@@ -78,19 +78,27 @@ public class InfoSellerService {
         resultDTO.setCode(-1);
         try{
             ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
-            System.out.println("1");
             ResultDTO<List<CompanyOverView>> companyResultDTO = companyBasicService.getAllCompany();
-            System.out.println("2");
             sellerListDTO.setUser(userResultDTO.getData());
             sellerListDTO.setCompanyOverViewList(companyResultDTO.getData());
             resultDTO.setData(sellerListDTO);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
 
-            String out = "";
-            for (CompanyOverView company:
-                 companyResultDTO.getData()) {
-                out += company.getCompanyId() + "\n";
-            }
-            LogUtil.log(getClass().getName(), out);
+    public ResultDTO<SellerListDTO> searchSellerListPage(String userId,String companyId, String companyName){
+        ResultDTO<SellerListDTO> resultDTO = new ResultDTO<>();
+        SellerListDTO sellerListDTO = new SellerListDTO();
+        resultDTO.setCode(-1);
+        try{
+            ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
+            ResultDTO<List<CompanyOverView>> companyResultDTO = companyBasicService.getCompany(companyId,companyName);
+            sellerListDTO.setUser(userResultDTO.getData());
+            sellerListDTO.setCompanyOverViewList(companyResultDTO.getData());
+            resultDTO.setData(sellerListDTO);
         }catch (Exception e){
             LogUtil.errorLog(e, getClass().getName());
         }

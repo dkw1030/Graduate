@@ -89,4 +89,27 @@ public class InfoSellerController {
         model.addAttribute("msg", resultDTO.getData());
         return "infoSeller/uploadSeller";
     }
+
+    @RequestMapping("/sellerListSearch/{userId}")
+    public String sellerListSearch(@PathVariable("userId") String userId,
+                                   @RequestParam("id") String id,
+                                   @RequestParam("name") String name,
+                                   Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_SELLER_DETAIL_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
+        ResultDTO<SellerListDTO> pageResultDTO = infoSellerService.searchSellerListPage(userId, id, name);
+        if(pageResultDTO.getCode() < 0){
+            return "error/404";
+        }
+
+        model.addAttribute("user", pageResultDTO.getData().getUser());
+        model.addAttribute("companyOverView", pageResultDTO.getData().getCompanyOverViewList());
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+
+        return "infoSeller/sellerList";
+    }
 }

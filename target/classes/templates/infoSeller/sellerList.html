@@ -32,50 +32,34 @@
         <div class="container-xl">
             <div class="row g-3 mb-4 align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Orders</h1>
+                    <h1 class="app-page-title mb-0">供应商列表</h1>
                 </div>
             </div><!--//row-->
-            <div class="row g-3 mb-4 align-items-center justify-content-between">
+            <form class="row g-3 mb-4 align-items-center justify-content-between" th:action="${'/sellerListSearch/'+user.getUserId()}">
                 <div class="col-auto">
-                    <h1 class="app-page-title mb-0">Orders</h1>
-                </div>
-                <div class="col-auto">
-                    <div class="page-utilities">
-                        <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                            <div class="col-auto">
-                                <form class="table-search-form row gx-1 align-items-center">
-                                    <div class="col-auto">
-                                        <input type="text" id="search-orders" name="searchorders" class="form-control search-orders" placeholder="Search">
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="submit" class="btn app-btn-secondary">Search</button>
-                                    </div>
-                                </form>
+                    <div class="table-search-form row gx-1 align-items-center">
+                        <div class="col-auto">
+                            <label for="search-2">公司编号</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="search-2" name="id" class="form-control search-orders" placeholder="id">
+                        </div>
+                        <div class="col-auto">
+                            <label for="search-3">公司名</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="search-3" name="name" class="form-control search-orders" placeholder="name">
+                        </div>
 
-                            </div><!--//col-->
-                            <div class="col-auto">
-
-                                <select class="form-select w-auto" >
-                                    <option selected value="option-1">All</option>
-                                    <option value="option-2">This week</option>
-                                    <option value="option-3">This month</option>
-                                    <option value="option-4">Last 3 months</option>
-
-                                </select>
-                            </div>
-                            <div class="col-auto">
-                                <a class="btn app-btn-secondary" href="#">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download mr-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                                    </svg>
-                                    Download CSV
-                                </a>
-                            </div>
-                        </div><!--//row-->
-                    </div><!--//table-utilities-->
+                    </div>
                 </div><!--//col-auto-->
-            </div><!--//row-->
+                <div class="col-auto">
+
+                    <div class="col-auto">
+                        <button type="submit" class="btn app-btn-secondary">Search</button>
+                    </div>
+                </div>
+            </form><!--//row-->
 
             <div class="tab-content" id="orders-table-tab-content">
                 <div class="tab-pane fade show active" role="tabpanel">
@@ -91,17 +75,18 @@
                                         <th class="cell">老板</th>
                                         <th class="cell">规模</th>
                                         <th class="cell">状态</th>
-                                        <th class="cell"></th>
+                                        <th class="cell">详情</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="cell">#15346</td>
-                                        <td class="cell">Name</td>
-                                        <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                        <td class="cell">John Sanders</td>
-                                        <td class="cell">$259.35</td>
-                                        <td class="cell"><span class="badge bg-success">Paid</span></td>
+                                    <tr th:each="item:${companyOverView}">
+                                        <td class="cell" th:text="${item.getCompanyId()}"></td>
+                                        <td class="cell" th:text="${item.getCompanyName()}"></td>
+                                        <td class="cell"><span class="truncate" th:text="${item.getCompanyDescription()}"></span></td>
+                                        <td class="cell" th:text="${item.getUserName()}"></td>
+                                        <td class="cell" th:text="${item.getCount()}"></td>
+                                        <td class="cell" th:if="${item.getValid()==1}"><span class="badge bg-success">有效</span></td>
+                                        <td class="cell" th:if="${item.getValid()!=1}"><span class="badge bg-danger">无效</span></td>
                                         <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
                                     </tr>
                                     </tbody>
