@@ -6,28 +6,35 @@
 <mapper namespace="com.example.demo.mapper.OrderMapper">
     <insert id="insertOrder" parameterType="com.example.demo.model.Model.resultType.OrderInfo">
         replace into orders
-        (orderId, sellerId, buyerId, orderStatus, firstTime, orderStr)
+        (orderId, sellerId, buyerId, orderStatus, firstTime, orderName, orderDescription, orderUploadTime)
         values (
             #{orderId},
             #{sellerId},
             #{buyerId},
             #{orderStatus},
             #{firstTime},
-            #{orderStr}
+            #{orderName},
+            #{orderDescription},
+            #{orderUploadTime}
             )
     </insert>
 
     <insert id="insertItems" parameterType="java.util.List">
         replace into item
-        (orderId, number, itemName, itemType)
+        (orderId, number, itemName, itemType, cost)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
             #{item.orderId},
             #{item.number},
             #{item.itemName},
-            #{item.itemType}
+            #{item.itemType},
+            #{item.cost}
             )
         </foreach>
     </insert>
+
+    <select id="getOrderByBuyerId" resultType="com.example.demo.model.Model.resultType.OrderInfo">
+        SELECT * FROM orders where buyerId = #{userId};
+    </select>
 </mapper>

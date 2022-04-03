@@ -7,9 +7,14 @@ import java.util.Date;
 @Data
 public class OrderInfo {
     /**
-     * 订单名或订单描述
+     * 订单名
      */
-    private String orderStr;
+    private String orderName;
+
+    /**
+     * 订单描述
+     */
+    private String orderDescription;
 
     /**
      * 订单id
@@ -45,6 +50,11 @@ public class OrderInfo {
      * 1    否
      */
     private int firstTime;
+
+    /**
+     * 订单上传时间
+     */
+    private Date orderUploadTime;
 
     /**
      * 订单确认时间

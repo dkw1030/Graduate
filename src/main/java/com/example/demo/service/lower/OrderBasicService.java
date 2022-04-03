@@ -11,10 +11,7 @@ import com.example.demo.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderBasicService {
@@ -22,9 +19,15 @@ public class OrderBasicService {
     @Autowired
     OrderMapper orderMapper;
 
-    public ResultDTO<List<Order>> getOrderByUser(User user){
-        List<Order> orders = Collections.emptyList();
-        ResultDTO<List<Order>> resultDTO = new ResultDTO<>();
+    public ResultDTO<List<OrderInfo>> getOrderByUser(User user){
+        List<OrderInfo> orders;
+        if(user.getUserRole() == 0){
+            orders = orderMapper.getOrderByBuyerId(user.getUserId());
+        }else{
+            orders = orderMapper.getOrderByCompanyId(user.getCompanyId());
+        }
+
+        ResultDTO<List<OrderInfo>> resultDTO = new ResultDTO<>();
         resultDTO.setCode(0);
         resultDTO.setData(orders);
         return resultDTO;
@@ -37,10 +40,12 @@ public class OrderBasicService {
 
         OrderInfo orderInfo = new OrderInfo();
         orderInfo.setOrderId(TimeUtil.getTimeStamp());
-        orderInfo.setOrderStr(data.get(1).get(1));
+        orderInfo.setOrderName(data.get(1).get(1));
+        orderInfo.setOrderDescription(data.get(3).get(2));
         orderInfo.setOrderStatus(0);
         orderInfo.setBuyerId(data.get(3).get(1));
         orderInfo.setSellerId(data.get(3).get(0));
+        orderInfo.setOrderUploadTime(new Date());
         orderInfo.setFirstTime(0);
 
         List<OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -50,6 +55,7 @@ public class OrderBasicService {
             orderItem.setItemName(data.get(i).get(0));
             orderItem.setItemType(data.get(i).get(1));
             orderItem.setNumber(Integer.parseInt(data.get(i).get(2)));
+            orderItem.setCost(Integer.parseInt(data.get(i).get(3)));
             orderItems.add(orderItem);
         }
         int orderResult = orderMapper.insertOrder(orderInfo);

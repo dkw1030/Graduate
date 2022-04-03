@@ -15,6 +15,11 @@ public class OrderItem {
     private int number;
 
     /**
+     * 单价
+     */
+    private int cost;
+
+    /**
      * 物料名
      */
     private String itemName;

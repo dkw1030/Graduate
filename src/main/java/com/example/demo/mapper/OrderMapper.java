@@ -12,4 +12,6 @@ import java.util.List;
 public interface OrderMapper {
     int insertOrder(OrderInfo orderInfo);
     int insertItems(List<OrderItem> orderItems);
+    List<OrderInfo> getOrderByBuyerId(String userId);
+    List<OrderInfo> getOrderByCompanyId(String companyId);
 }

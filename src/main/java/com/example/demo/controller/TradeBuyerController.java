@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Controller
 public class TradeBuyerController {
     @Autowired
@@ -23,8 +27,53 @@ public class TradeBuyerController {
     @Autowired
     AccountService accountService;
 
-    @RequestMapping("/orderDetail/{userId}")
-    public String loginLayout(@PathVariable("userId")String userId, Model model){
+    @RequestMapping("/orderList/{userId}")
+    public String orderList(@PathVariable("userId")String userId, Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
+        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.TradeBuyerPage(userId);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("user", resultDTO.getData().getUser());
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+        model.addAttribute("orders", resultDTO.getData().getOrders());
+        return "tradeBuyer/orderList";
+    }
+
+    @RequestMapping("/orderListSearch/{userId}")
+    public String orderListSearch(@PathVariable("userId")String userId,
+                                  @RequestParam("orderId") String orderId,
+                                  @RequestParam("itemName") String itemName,
+                                  @RequestParam("id") String Id,
+                                  @RequestParam("type") String type,
+                                  @RequestParam("startTime") String startTime,
+                                  @RequestParam("endTime") String endTime,
+                                  Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
+        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.TradeBuyerPage(userId);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("user", resultDTO.getData().getUser());
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+        model.addAttribute("orders", resultDTO.getData().getOrders());
+        return "tradeBuyer/orderList";
+    }
+
+    @RequestMapping("/orderDetail/{userId}/{orderId}")
+    public String loginLayout(@PathVariable("userId")String userId,
+                              @PathVariable("orderId")String orderId,
+                              Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
@@ -49,13 +98,12 @@ public class TradeBuyerController {
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_INPUT_ORDER_ID);
         sidePanelStatusDTO.setUserId(userId);
 
-        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.UploadOrderPage(userId);
+        ResultDTO<User> resultDTO = tradeBuyerService.UploadOrderPage(userId);
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
-        model.addAttribute("user", resultDTO.getData().getUser());
+        model.addAttribute("user", resultDTO.getData());
         model.addAttribute("sidePanel", sidePanelStatusDTO);
-        model.addAttribute("orders", resultDTO.getData().getOrders());
         return "tradeBuyer/uploadOrder";
     }
 
