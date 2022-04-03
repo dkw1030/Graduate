@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.OrderMapper">
+    <insert id="insertOrder" parameterType="com.example.demo.model.Model.resultType.OrderInfo">
+        replace into orders
+        (orderId, sellerId, buyerId, orderStatus, firstTime, orderStr)
+        values (
+            #{orderId},
+            #{sellerId},
+            #{buyerId},
+            #{orderStatus},
+            #{firstTime},
+            #{orderStr}
+            )
+    </insert>
+
+    <insert id="insertItems" parameterType="java.util.List">
+        replace into item
+        (orderId, number, itemName, itemType)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.orderId},
+            #{item.number},
+            #{item.itemName},
+            #{item.itemType}
+            )
+        </foreach>
+    </insert>
+</mapper>

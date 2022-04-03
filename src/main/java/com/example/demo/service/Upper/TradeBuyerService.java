@@ -7,7 +7,6 @@ import com.example.demo.model.Model.Order;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.lower.AccountBasicService;
 import com.example.demo.service.lower.OrderBasicService;
-import com.example.demo.service.lower.TradeBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
 import org.apache.commons.io.FileUtils;
@@ -25,9 +24,6 @@ public class TradeBuyerService {
 
     @Autowired
     OrderBasicService orderBasicService;
-
-    @Autowired
-    TradeBasicService tradeBasicService;
 
     public ResultDTO<TradeDTO> TradeBuyerPage(String userId){
         ResultDTO<TradeDTO> resultDTO = new ResultDTO<>();
@@ -78,6 +74,7 @@ public class TradeBuyerService {
             code = -2;
             //文件转数据
             List<List<String>> data = FileUtil.ReadExcel(file.getPath());
+            LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
 
             //核验数据是否有误
             ResultDTO<String> checkResult = checkOrderData(data);
@@ -87,7 +84,7 @@ public class TradeBuyerService {
                 return resultDTO;
             }
             //对data进行处理
-            ResultDTO<String> insertResult = tradeBasicService.uploadOrder(data);
+            ResultDTO<String> insertResult = orderBasicService.uploadOrder(data);
         } catch (Exception e) {
             e.printStackTrace();
             resultDTO.setData("文件上传失败");

@@ -33,7 +33,7 @@
             <div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
                 <div class="d-flex flex-column align-content-end">
                     <div class="app-auth-body mx-auto">
-                        <h2 class="auth-heading text-center mb-5">上传供应商信息</h2>
+                        <h2 class="auth-heading text-center mb-5">上传订单</h2>
                         <div class="auth-form-container text-left">
                             <form method="post"  class="auth-form login-form" th:action="${'/uploadOrderAction/'+user.getUserId()}" enctype="multipart/form-data">
                                 <br>
@@ -55,8 +55,8 @@
                     <div class="d-flex flex-column align-content-end h-100">
                         <br>
                         <div class="overlay-content p-3 p-lg-4 rounded">
-                            <h5 class="mb-3 overlay-title">将新的供应商信息上传至平台！</h5>
-                            <div>上传新的供应商信息，为大家提供新的选择。上传信息后会自动创建供应商架构并且为供应商所有员工创建初始账号。对供应商信息进行统一管理，为供应商评价提供参考依据，为供应商提供参与系统的基础。</div>
+                            <h5 class="mb-3 overlay-title">上传新的订单到平台</h5>
+                            <div>直接上传订单，解决批量选购的烦恼</div>
                         </div>
                     </div>
                 </div><!--//auth-background-overlay-->

@@ -5,7 +5,6 @@ import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.Upper.MainService;
-import com.example.demo.service.lower.AccountBasicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class mainController {
+public class MainController {
     @Autowired
     MainService mainService;
 

@@ -11,6 +11,6 @@ public class Order extends OrderInfo {
     /**
      * 订单包含的物料
      */
-    List<item> items;
+    List<OrderItem> OrderItems;
 
 }

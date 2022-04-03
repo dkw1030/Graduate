@@ -3,7 +3,7 @@ package com.example.demo.model.Model;
 import lombok.Data;
 
 @Data
-public class item {
+public class OrderItem {
     /**
      * 订单号
      */

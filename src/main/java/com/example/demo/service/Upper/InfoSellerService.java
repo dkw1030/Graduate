@@ -6,7 +6,6 @@ import com.example.demo.model.DTO.SellerListDTO;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.lower.AccountBasicService;
-import com.example.demo.service.lower.CompanyBasicService;
 import com.example.demo.service.lower.InfoSellerBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
@@ -22,9 +21,6 @@ import java.util.List;
 public class InfoSellerService {
     @Autowired
     InfoSellerBasicService infoSellerBasicService;
-
-    @Autowired
-    CompanyBasicService companyBasicService;
 
 
     @Autowired
@@ -45,6 +41,7 @@ public class InfoSellerService {
             code = -2;
             //文件转数据
             List<List<String>> data = FileUtil.ReadExcel(file.getPath());
+            LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
 
             //核验数据是否有误
             ResultDTO<String> checkResult = checkCompanyData(data);
@@ -78,7 +75,7 @@ public class InfoSellerService {
         resultDTO.setCode(-1);
         try{
             ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
-            ResultDTO<List<CompanyOverView>> companyResultDTO = companyBasicService.getAllCompany();
+            ResultDTO<List<CompanyOverView>> companyResultDTO = infoSellerBasicService.getAllCompany();
             sellerListDTO.setUser(userResultDTO.getData());
             sellerListDTO.setCompanyOverViewList(companyResultDTO.getData());
             resultDTO.setData(sellerListDTO);
@@ -95,7 +92,7 @@ public class InfoSellerService {
         resultDTO.setCode(-1);
         try{
             ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
-            ResultDTO<List<CompanyOverView>> companyResultDTO = companyBasicService.getCompany(companyId,companyName);
+            ResultDTO<List<CompanyOverView>> companyResultDTO = infoSellerBasicService.getCompany(companyId,companyName);
             sellerListDTO.setUser(userResultDTO.getData());
             sellerListDTO.setCompanyOverViewList(companyResultDTO.getData());
             resultDTO.setData(sellerListDTO);

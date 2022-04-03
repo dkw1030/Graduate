@@ -2,6 +2,7 @@ package com.example.demo.service.lower;
 
 import com.example.demo.mapper.InfoSellerMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.Department;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.CompanyInfo;
@@ -67,7 +68,6 @@ public class InfoSellerBasicService {
             }
             users.add(user);
         }
-        LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
         int companyResult = infoSellerMapper.insertCompany(companyInfo);
         LogUtil.log(getClass().getName(), "company insert finish\n" + companyResult);
         int departmentResult = infoSellerMapper.insertDepartment(departmentInfos);
@@ -79,5 +79,31 @@ public class InfoSellerBasicService {
         resultDTO.setData("success");
         resultDTO.setCode(0);
         return resultDTO;
+    }
+
+    public ResultDTO<List<CompanyOverView>> getAllCompany() throws Exception{
+        ResultDTO<List<CompanyOverView>> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        System.out.println();
+        List<CompanyOverView> companyOverViewList = infoSellerMapper.getAllCompanyOverViewList();
+//        List<CompanyOverView> companyOverViewList = Arrays.asList();
+
+        resultDTO.setData(companyOverViewList);
+        resultDTO.setCode(0);
+        return resultDTO;
+
+    }
+
+    public ResultDTO<List<CompanyOverView>> getCompany(String companyId, String companyName) throws Exception{
+        ResultDTO<List<CompanyOverView>> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        System.out.println();
+        List<CompanyOverView> companyOverViewList = infoSellerMapper.getCompanyOverViewList(companyId, companyName);
+//        List<CompanyOverView> companyOverViewList = Arrays.asList();
+
+        resultDTO.setData(companyOverViewList);
+        resultDTO.setCode(0);
+        return resultDTO;
+
     }
 }
