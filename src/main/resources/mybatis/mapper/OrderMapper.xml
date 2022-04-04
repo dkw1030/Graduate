@@ -21,7 +21,7 @@
 
     <insert id="insertItems" parameterType="java.util.List">
         replace into item
-        (orderId, number, itemName, itemType, cost)
+        (orderId, number, itemName, itemType, cost, process)
         values
         <foreach collection="list" item="item" index="index" separator=",">
             (
@@ -29,12 +29,61 @@
             #{item.number},
             #{item.itemName},
             #{item.itemType},
-            #{item.cost}
+            #{item.cost},
+            #{item.process}
             )
         </foreach>
     </insert>
 
     <select id="getOrderByBuyerId" resultType="com.example.demo.model.Model.resultType.OrderInfo">
         SELECT * FROM orders where buyerId = #{userId};
+    </select>
+
+    <select id="getOrderListByItem" resultType="java.lang.String">
+        select distinct orderId from item where 1=1
+        <if test="itemName != '' and itemName!=null">
+            and itemName LIKE '%${itemName}%'
+        </if>
+        <if test="type != '' and type!=null">
+            and itemType = #{type}
+        </if>
+    </select>
+
+    <select id="getOrderByOrderSearchDTO" resultType="com.example.demo.model.Model.resultType.OrderInfo">
+        SELECT * FROM
+        <if test="orderIdList.size()>0">
+            (select * from orders
+            where orderId =
+            <foreach collection="orderIdList" item="item" separator="or">
+                #{item}
+            </foreach>
+            ) as orderIdList
+        </if>
+        <if test="orderIdList.size()==0">
+            orders
+        </if>
+        where
+        orderStatus = #{status}
+        <if test="companyId != '' and companyId!=null">
+            and sellerId = #{companyId}
+        </if>
+        <if test="buyerId != '' and buyerId!=null">
+            and buyerId = #{buyerId}
+        </if>
+        <if test="startTime != '' and startTime!=null">
+            and
+            <if test="witchTime == 0">
+                orderUploadTime
+            </if>
+            &gt;= #{startTime}
+        </if>
+        <if test="endTime != '' and endTime!=null">
+            and
+            <if test="witchTime == 0">
+                orderUploadTime
+            </if>
+            &lt;= #{endTime}
+        </if>
+        ;
     </select>
 </mapper>

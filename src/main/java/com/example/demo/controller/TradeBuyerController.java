@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
+import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
 import com.example.demo.model.DTO.TradeDTO;
@@ -49,7 +50,7 @@ public class TradeBuyerController {
     public String orderListSearch(@PathVariable("userId")String userId,
                                   @RequestParam("orderId") String orderId,
                                   @RequestParam("itemName") String itemName,
-                                  @RequestParam("id") String Id,
+                                  @RequestParam("id") String id,
                                   @RequestParam("type") String type,
                                   @RequestParam("startTime") String startTime,
                                   @RequestParam("endTime") String endTime,
@@ -60,7 +61,15 @@ public class TradeBuyerController {
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID);
         sidePanelStatusDTO.setUserId(userId);
 
-        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.TradeBuyerPage(userId);
+        OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
+        orderSearchDTO.setOrderId(orderId);
+        orderSearchDTO.setItemName(itemName);
+        orderSearchDTO.setType(type);
+        orderSearchDTO.setWitchTime(0);
+        orderSearchDTO.setStartTime(startTime);
+        orderSearchDTO.setEndTime(endTime);
+
+        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.TradeBuyerSearchPage(orderSearchDTO, userId, id);
         if(resultDTO.getCode() < 0){
             return "error/404";
         }

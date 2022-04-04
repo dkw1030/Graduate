@@ -1,11 +1,18 @@
 package com.example.demo.model.DTO;
 
+import lombok.Data;
+
+import java.util.List;
+@Data
 public class OrderSearchDTO {
     private String buyerId;
     private String companyId;
+
+    private List<String> orderIdList;
     private String orderId;
     private String itemName;
     private String type;
+    private int ifSearch;
 
     /**
      * 0 上传时间

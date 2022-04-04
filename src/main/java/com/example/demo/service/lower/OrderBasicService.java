@@ -1,6 +1,7 @@
 package com.example.demo.service.lower;
 
 import com.example.demo.mapper.OrderMapper;
+import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.Order;
 import com.example.demo.model.Model.OrderItem;
@@ -33,6 +34,56 @@ public class OrderBasicService {
         return resultDTO;
     }
 
+    public ResultDTO<List<String>> getOrderIdList(OrderSearchDTO orderSearchDTO) throws Exception{
+        ResultDTO<List<String>> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        List<String> orderIdList = new ArrayList<>();
+        orderSearchDTO.setIfSearch(0);
+        if((orderSearchDTO.getType() != null && !orderSearchDTO.getType().equals(""))
+                || ( orderSearchDTO.getItemName() != null && !orderSearchDTO.getItemName().equals(""))){
+            orderIdList = orderMapper.getOrderListByItem(orderSearchDTO);
+        }else{
+            orderSearchDTO.setIfSearch(1);
+        }
+        if(orderIdList.size()>0 || orderSearchDTO.getIfSearch()==1){
+            if((orderSearchDTO.getOrderId()!=null&& !orderSearchDTO.getOrderId().equals("") )
+                    && !orderIdList.contains(orderSearchDTO.getOrderId())){
+                orderIdList.add(orderSearchDTO.getOrderId());
+            }
+        }
+//        System.out.println("list");
+//        for (String s :
+//                orderIdList) {
+//            System.out.println(s);
+//        }
+        resultDTO.setCode(0);
+        resultDTO.setData(orderIdList);
+        return resultDTO;
+    }
+
+    public ResultDTO<List<OrderInfo>> searchOrders(OrderSearchDTO orderSearchDTO) throws Exception{
+        ResultDTO<List<OrderInfo>> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        ResultDTO<List<String>> orderIdListResult = getOrderIdList(orderSearchDTO);
+        if(orderIdListResult.getCode()<0){
+            return resultDTO;
+        }
+//        if(orderIdListResult.getData().size()==0){
+//            resultDTO.setCode(0);
+//            resultDTO.setData(Collections.emptyList());
+//            return resultDTO;
+//        }
+        List<String> orderIdList = orderIdListResult.getData();
+        orderSearchDTO.setOrderIdList(orderIdList);
+        List<OrderInfo> orderInfoResult = Collections.emptyList();
+        if(orderIdList.size()!=0 || orderSearchDTO.getIfSearch()==1 ){
+            orderInfoResult = orderMapper.getOrderByOrderSearchDTO(orderSearchDTO);
+        }
+        resultDTO.setData(orderInfoResult);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
     public ResultDTO<String> uploadOrder(List<List<String>> data) throws Exception{
         ResultDTO<String> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
@@ -56,6 +107,7 @@ public class OrderBasicService {
             orderItem.setItemType(data.get(i).get(1));
             orderItem.setNumber(Integer.parseInt(data.get(i).get(2)));
             orderItem.setCost(Integer.parseInt(data.get(i).get(3)));
+            orderItem.setProcess(0);
             orderItems.add(orderItem);
         }
         int orderResult = orderMapper.insertOrder(orderInfo);

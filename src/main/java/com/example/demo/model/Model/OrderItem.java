@@ -28,4 +28,9 @@ public class OrderItem {
      * 型号
      */
     private String itemType;
+
+    /**
+     * 进度
+     */
+    int process;
 }
