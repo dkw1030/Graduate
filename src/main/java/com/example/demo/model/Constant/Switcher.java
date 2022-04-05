@@ -71,4 +71,8 @@ public class Switcher {
         public static int ORDER_STATUS_BUYER_RECEIVE = 6;
         public static int ORDER_STATUS_BUYER_REJECT = 7;
     }
+
+    public static class PageSwitcher{
+        public static int NUM = 1;
+    }
 }

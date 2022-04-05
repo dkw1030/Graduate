@@ -7,6 +7,8 @@ import java.util.List;
 public class OrderSearchDTO {
     private String buyerId;
     private String companyId;
+    private String orderName;
+    private String orderDescription;
 
     private List<String> orderIdList;
     private String orderId;

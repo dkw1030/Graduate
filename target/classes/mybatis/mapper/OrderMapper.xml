@@ -67,6 +67,12 @@
         <if test="companyId != '' and companyId!=null">
             and sellerId = #{companyId}
         </if>
+        <if test="orderName != '' and orderName!=null">
+            and orderName LIKE '%${orderName}%'
+        </if>
+        <if test="orderDescription != '' and orderDescription!=null">
+            and orderDescription LIKE '%${orderDescription}%'
+        </if>
         <if test="buyerId != '' and buyerId!=null">
             and buyerId = #{buyerId}
         </if>

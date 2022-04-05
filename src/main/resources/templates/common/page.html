@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="page(page,list)">
+    <form th:action="${page.getUrl()}">
+        <input name="list" th:value="${list}" style="visibility: hidden">
+        <div th:if="${page.getStyle()==1}">
+            <nav class="app-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:each="count:${#numbers.sequence(1,page.getTot())}" th:classappend="${count==page.getCur()?'active':''}">
+                        <a class="page-link"><input type="submit" name="page" th:value="${count}"></a>
+                    </li>
+                </ul>
+            </nav><!--//app-pagination-->
+        </div>
+        <div th:if="${page.getStyle()==2}">
+            <nav class="app-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${1==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="1"></a></li>
+                    <li class="page-item" th:classappend="${2==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="2"></a></li>
+                    <li class="page-item" th:classappend="${3==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="3"></a></li>
+                    <li class="page-item" th:classappend="${4==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="4"></a></li>
+                    <li class="page-item" th:classappend="${5==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="5"></a></li>
+                    <li class="page-item"><a class="page-link">...</a></li>
+                    <li class="page-item" th:classappend="${page.getTot()==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()}"></a></li>
+                </ul>
+            </nav><!--//app-pagination-->
+        </div>
+        <div th:if="${page.getStyle()==3}">
+            <nav class="app-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${1==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="1"></a></li>
+                    <li class="page-item"><a class="page-link">...</a></li>
+                    <li class="page-item"><a class="page-link"><input type="submit" name="page" th:value="${page.getCur()-1}"></a></li>
+                    <li class="page-item active"><a class="page-link"><input type="submit" name="page" th:value="${page.getCur()}"></a></li>
+                    <li class="page-item"><a class="page-link"><input type="submit" name="page" th:value="${page.getCur()+1}"></a></li>
+                    <li class="page-item"><a class="page-link">...</a></li>
+                    <li class="page-item" th:classappend="${page.getTot()==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()}"></a></li>
+                </ul>
+            </nav><!--//app-pagination-->
+        </div>
+        <div th:if="${page.getStyle()==4}">
+            <nav class="app-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${count==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" value="1"></a></li>
+                    <li class="page-item"><a class="page-link">...</a></li>
+                    <li class="page-item" th:classappend="${(page.getTot()-4)==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()-4}"></a></li>
+                    <li class="page-item" th:classappend="${(page.getTot()-3)==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()-3}"></a></li>
+                    <li class="page-item" th:classappend="${(page.getTot()-2)==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()-2}"></a></li>
+                    <li class="page-item" th:classappend="${(page.getTot()-1)==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()-1}"></a></li>
+                    <li class="page-item" th:classappend="${(page.getTot())==page.getCur()?'active':''}"><a class="page-link"><input type="submit" name="page" th:value="${page.getTot()}"></a></li>
+                </ul>
+            </nav><!--//app-pagination-->
+        </div>
+    </form>
+</div>
+</html>

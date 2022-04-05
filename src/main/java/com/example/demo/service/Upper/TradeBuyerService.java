@@ -44,31 +44,6 @@ public class TradeBuyerService {
         return resultDTO;
     }
 
-    public ResultDTO<TradeDTO> TradeBuyerSearchPage(OrderSearchDTO orderSearchDTO, String userId, String id){
-        ResultDTO<TradeDTO> resultDTO = new ResultDTO<>();
-        TradeDTO tradeDTO = new TradeDTO();
-        resultDTO.setData(tradeDTO);
-        resultDTO.setCode(-1);
-        try{
-            ResultDTO<User> userResultDTO = accountBasicService.getUserById(userId);
-            tradeDTO.setUser(userResultDTO.getData());
-            if(userResultDTO.getData().getUserRole() == 0){
-                orderSearchDTO.setBuyerId(userId);
-                orderSearchDTO.setCompanyId(id);
-            }else {
-                orderSearchDTO.setBuyerId(id);
-                orderSearchDTO.setCompanyId(userId);
-            }
-
-            ResultDTO<List<OrderInfo>> orderResult = orderBasicService.searchOrders(orderSearchDTO);
-            tradeDTO.setOrders(orderResult.getData());
-        }catch(Exception e){
-            LogUtil.errorLog(e, getClass().getName());
-        }
-        resultDTO.setCode(0);
-        return resultDTO;
-    }
-
     public ResultDTO<User> UploadOrderPage(String userId){
         ResultDTO<User> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
