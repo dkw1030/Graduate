@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class distributionController {
+public class DistributionController {
     @Autowired
     DistributionService distributionService;
 
