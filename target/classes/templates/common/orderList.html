@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="orderlist(orders,url,user)">
+
+<!--        <input name="list" th:value="${list}" style="visibility: hidden">-->
+<!--        <input name="curPage" th:value="${page.getCur()}" style="visibility: hidden">-->
+        <div class="app-card app-card-orders-table shadow-sm mb-5">
+            <div class="app-card-body">
+                <div class="table-responsive">
+                    <table class="table app-table-hover mb-0 text-left">
+                        <thead>
+                        <tr>
+                            <th class="cell">订单编号</th>
+                            <th class="cell">订单名</th>
+                            <th class="cell">订单介绍</th>
+                            <th class="cell">采购员编号</th>
+                            <th class="cell">供应商编号</th>
+                            <th class="cell">详情</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item:${orders}">
+                            <td class="cell" th:text="${item.getOrderId()}"></td>
+                            <td class="cell" th:text="${item.getOrderName()}"></td>
+                            <td class="cell"><span class="truncate" th:text="${item.getOrderDescription()}"></span></td>
+                            <td class="cell" th:text="${item.getBuyerId()}"></td>
+                            <td class="cell" th:text="${item.getSellerId()}"></td>
+                            <td class="cell"><a class="btn-sm app-btn-secondary" th:href="${'/orderDetail/'+user.getUserId()+'/'+item.getOrderId()}" target="_blank">View</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--//table-responsive-->
+            </div><!--//app-card-body-->
+        </div><!--//app-card-->
+
+</div>
+
+</html>

@@ -9,6 +9,14 @@ import java.util.List;
 
 public class PageControlUtil {
 
+    public static PageDTO generatePageDTO(List allList, int curPage){
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setCur(curPage);
+        pageDTO.setTot(totPage(allList.size()));
+        pageDTO.setStyle(setStyle(pageDTO));
+        return pageDTO;
+    }
+
     public static int fromIndex(int page){
         int num = Switcher.PageSwitcher.NUM;
         return (page-1) * num;

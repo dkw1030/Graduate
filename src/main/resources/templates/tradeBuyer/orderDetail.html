@@ -21,26 +21,13 @@
 </head>
 
 <body class="app">
-<header class="app-header fixed-top">
-    <div th:replace="common/header::header(${user})"></div>
-    <div th:replace="common/sidepanel::sidepanel(${sidePanel})"></div>
-</header><!--//app-header-->
 
-<div class="app-wrapper">
-
-    <div class="app-content pt-3 p-md-3 p-lg-4">
-        <div class="container-xl">
-
-        </div>
-    </div><!--//app-content-->
+    <div th:replace="/common/orderDetail::orderDetail(${orders})"></div>
 
     <footer class="app-footer">
         <div th:replace="common/footer::footer">
         </div>
     </footer><!--//app-footer-->
-
-</div><!--//app-wrapper-->
-
 
 <!-- Javascript -->
 <script th:src="@{/assets/plugins/popper.min.js}"></script>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="search(url,user)">
+    <form class="row g-3 mb-4 align-items-center justify-content-between" th:action="${url.getSearchUrl()+user.getUserId()}">
+        <div class="col-auto">
+            <div class="table-search-form row gx-1 align-items-center">
+
+                <div class="col-auto">
+                    <label for="search-2">订单编号</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-2" name="orderId" class="form-control search-orders" placeholder="order id">
+                </div>
+                <div class="col-auto">
+                    <label for="search-2">订单名</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-2" name="orderName" class="form-control search-orders" placeholder="order id">
+                </div>
+                <div class="col-auto">
+                    <label for="search-2">订单简介</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-2" name="orderDes" class="form-control search-orders" placeholder="order id">
+                </div>
+
+            </div>
+        </div><!--//col-auto-->
+        <div class="col-auto">
+            <div class="table-search-form row gx-1 align-items-center">
+                <div class="col-auto">
+                    <label for="search-3" th:text="${user.getUserRole()==0?'供应商编号':'采购员编号'}"></label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-3" name="id" class="form-control search-orders" placeholder="id">
+                </div>
+                <div class="col-auto">
+                    <label for="search-2">物料名称</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-2" name="itemName" class="form-control search-orders" placeholder="item name">
+                </div>
+                <div class="col-auto">
+                    <label for="search-4">型号</label>
+                </div>
+                <div class="col-auto">
+                    <input type="text" id="search-4" name="type" class="form-control search-orders" placeholder="type">
+                </div>
+            </div>
+        </div><!--//col-auto-->
+        <div class="col-auto">
+            <div class="table-search-form row gx-1 align-items-center">
+                <div class="col-auto">
+                    <label for="search-5">订单发布时间段：  </label>
+                </div>
+                <div class="col-auto">
+                    <input type="datetime-local" id="search-5" name="startTime" class="form-control search-orders" placeholder="start time">
+                </div>
+                <div class="col-auto">
+                    <label for="search-6">至</label>
+                </div>
+                <div class="col-auto">
+                    <input type="datetime-local" id="search-6" name="endTime" class="form-control search-orders" placeholder="start time">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn app-btn-secondary">Search</button>
+                </div>
+            </div>
+        </div><!--//col-auto-->
+    </form><!--//row-->
+</div>
+</html>

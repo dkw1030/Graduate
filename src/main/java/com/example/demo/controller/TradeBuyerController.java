@@ -4,11 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.model.Constant.Switcher;
-import com.example.demo.model.DTO.OrderSearchDTO;
-import com.example.demo.model.DTO.PageDTO;
+import com.example.demo.model.DTO.*;
 import com.example.demo.model.DTO.Result.ResultDTO;
-import com.example.demo.model.DTO.SidePanelStatusDTO;
-import com.example.demo.model.DTO.TradeDTO;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.OrderInfo;
@@ -50,9 +47,8 @@ public class TradeBuyerController {
                             Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
-
-
         orderSearchDTO.setStatus(0);
+
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO, userId, null);
 
         if(resultDTO.getData().getUser().getUserRole()==0){
@@ -72,15 +68,18 @@ public class TradeBuyerController {
         PageDTO pageDTO = new PageDTO();
         pageDTO.setCur(1);
         pageDTO.setUrl("/orderListPage/"+userId);
-
         List<OrderInfo> allList =resultDTO.getData().getOrders();
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
                 toIndex(pageDTO.getCur(), allList.size()));
         String json = JSONArray.toJSON(allList).toString();
-
         pageDTO.setTot(PageControlUtil.totPage(allList.size()));
         pageDTO.setStyle(PageControlUtil.setStyle(pageDTO));
 
+        ListUrlDTO urlDTO = new ListUrlDTO();
+        urlDTO.setSearchUrl("/orderListSearch/");
+        urlDTO.setDetailUrl("/orderDetail/");
+
+        model.addAttribute("url", urlDTO);
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("orders", showList);
         model.addAttribute("list", json);
@@ -131,6 +130,11 @@ public class TradeBuyerController {
 
         pageDTO.setTot(PageControlUtil.totPage(allList.size()));
         pageDTO.setStyle(PageControlUtil.setStyle(pageDTO));
+        ListUrlDTO urlDTO = new ListUrlDTO();
+        urlDTO.setSearchUrl("/orderListSearch/");
+        urlDTO.setDetailUrl("/orderDetail/");
+
+        model.addAttribute("url", urlDTO);
 
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("orders", showList);
@@ -170,6 +174,11 @@ public class TradeBuyerController {
         pageDTO.setTot(PageControlUtil.totPage(list.size()));
         pageDTO.setStyle(PageControlUtil.setStyle(pageDTO));
 
+        ListUrlDTO urlDTO = new ListUrlDTO();
+        urlDTO.setSearchUrl("/orderListSearch/");
+        urlDTO.setDetailUrl("/orderDetail/");
+
+        model.addAttribute("url", urlDTO);
         model.addAttribute("user", userResultDTO.getData());
         model.addAttribute("orders", showList);
         model.addAttribute("list", json);
@@ -183,6 +192,7 @@ public class TradeBuyerController {
     public String orderDetail(@PathVariable("userId")String userId,
                               @PathVariable("orderId")String orderId,
                               Model model){
+        System.out.println(orderId);
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
