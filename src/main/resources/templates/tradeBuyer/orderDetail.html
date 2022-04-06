@@ -22,7 +22,7 @@
 
 <body class="app">
 
-    <div th:replace="/common/orderDetail::orderDetail(${orders})"></div>
+    <div th:replace="/common/orderDetail::orderDetail(${order},${item})"></div>
 
     <footer class="app-footer">
         <div th:replace="common/footer::footer">

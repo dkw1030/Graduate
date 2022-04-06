@@ -13,8 +13,9 @@ import java.util.List;
 public interface OrderMapper {
     int insertOrder(OrderInfo orderInfo);
     int insertItems(List<OrderItem> orderItems);
-    List<OrderInfo> getOrderByBuyerId(String userId);
-    List<OrderInfo> getOrderByCompanyId(String companyId);
+//    List<OrderInfo> getOrderByBuyerId(String userId);
+//    List<OrderInfo> getOrderByCompanyId(String companyId);
     List<OrderInfo> getOrderByOrderSearchDTO(OrderSearchDTO orderSearchDTO);
     List<String> getOrderListByItem(OrderSearchDTO orderSearchDTO);
+    List<OrderItem> getItemsByOrderId(String orderId);
 }

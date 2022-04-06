@@ -6,8 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Order extends OrderInfo {
+public class Order{
 
+    OrderInfo orderInfo;
     /**
      * 订单包含的物料
      */

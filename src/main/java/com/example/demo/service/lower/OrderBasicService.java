@@ -20,21 +20,20 @@ public class OrderBasicService {
     @Autowired
     OrderMapper orderMapper;
 
-    public ResultDTO<List<OrderInfo>> getOrderByUser(User user){
-        List<OrderInfo> orders;
-        if(user.getUserRole() == 0){
-            orders = orderMapper.getOrderByBuyerId(user.getUserId());
-        }else{
-            orders = orderMapper.getOrderByCompanyId(user.getCompanyId());
-        }
-
-        ResultDTO<List<OrderInfo>> resultDTO = new ResultDTO<>();
-        resultDTO.setCode(0);
-        resultDTO.setData(orders);
-        return resultDTO;
-    }
-
-    public ResultDTO<List<String>> getOrderIdList(OrderSearchDTO orderSearchDTO) throws Exception{
+//    public ResultDTO<List<OrderInfo>> getOrderByUser(User user){
+//        List<OrderInfo> orders;
+//        if(user.getUserRole() == 0){
+//            orders = orderMapper.getOrderByBuyerId(user.getUserId());
+//        }else{
+//            orders = orderMapper.getOrderByCompanyId(user.getCompanyId());
+//        }
+//
+//        ResultDTO<List<OrderInfo>> resultDTO = new ResultDTO<>();
+//        resultDTO.setCode(0);
+//        resultDTO.setData(orders);
+//        return resultDTO;
+//    }
+    private ResultDTO<List<String>> getOrderIdList(OrderSearchDTO orderSearchDTO) throws Exception{
         ResultDTO<List<String>> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
         List<String> orderIdList = new ArrayList<>();

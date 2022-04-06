@@ -25,5 +25,6 @@ public class OrderSearchDTO {
     private int witchTime;
     private String startTime;
     private String endTime;
-    private int status;
+    private int status = -1;
+    private int statusS = -1;
 }

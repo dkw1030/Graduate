@@ -14,7 +14,7 @@ public enum SubMenu {
 
     DISTRIBUTION_WAIT_DELIVER(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID, "/distribution/waitDeliverOrderList", "待发货"),
     DISTRIBUTION_DELIVERING(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID, "/distribution/deliveringOrderList", "运输中"),
-    DISTRIBUTION_RESULT(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID, "/distribution/waitReceiveOrderList", "待签收");
+    DISTRIBUTION_RESULT(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID, "/distribution/waitReceiveOrderList", "已签收");
 
     public final int id;
     public final String url;

@@ -7,9 +7,11 @@ import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.*;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.CompanyOverView;
+import com.example.demo.model.Model.Order;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.OrderInfo;
 import com.example.demo.service.Upper.AccountService;
+import com.example.demo.service.Upper.DetailService;
 import com.example.demo.service.Upper.OrderService;
 import com.example.demo.service.Upper.TradeBuyerService;
 import com.example.demo.utils.JsonListUtil;
@@ -28,8 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.demo.utils.PageControlUtil.fromIndex;
-import static com.example.demo.utils.PageControlUtil.toIndex;
+import static com.example.demo.utils.PageControlUtil.*;
 
 @Controller
 public class TradeBuyerController {
@@ -42,12 +43,16 @@ public class TradeBuyerController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    DetailService detailService;
+
     @RequestMapping("/orderList/{userId}")
     public String orderList(@PathVariable("userId")String userId,
                             Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
         orderSearchDTO.setStatus(0);
+        orderSearchDTO.setStatusS(3);
 
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO, userId, null);
 
@@ -60,24 +65,20 @@ public class TradeBuyerController {
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID);
         sidePanelStatusDTO.setUserId(userId);
 
-
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
-
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setCur(1);
-        pageDTO.setUrl("/orderListPage/"+userId);
         List<OrderInfo> allList =resultDTO.getData().getOrders();
+        PageDTO pageDTO = PageControlUtil.generatePageDTO(allList, 1);
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
                 toIndex(pageDTO.getCur(), allList.size()));
+
         String json = JSONArray.toJSON(allList).toString();
-        pageDTO.setTot(PageControlUtil.totPage(allList.size()));
-        pageDTO.setStyle(PageControlUtil.setStyle(pageDTO));
 
         ListUrlDTO urlDTO = new ListUrlDTO();
         urlDTO.setSearchUrl("/orderListSearch/");
         urlDTO.setDetailUrl("/orderDetail/");
+        pageDTO.setUrl("/orderListPage/"+userId);
 
         model.addAttribute("url", urlDTO);
         model.addAttribute("user", resultDTO.getData().getUser());
@@ -85,7 +86,7 @@ public class TradeBuyerController {
         model.addAttribute("list", json);
         model.addAttribute("sidePanel", sidePanelStatusDTO);
         model.addAttribute("page", pageDTO);
-        return "tradeBuyer/orderList";
+        return "orderList/orderList";
     }
 
     @RequestMapping("/orderListSearch/{userId}")
@@ -114,16 +115,17 @@ public class TradeBuyerController {
         orderSearchDTO.setWitchTime(0);
         orderSearchDTO.setStartTime(startTime);
         orderSearchDTO.setEndTime(endTime);
+        orderSearchDTO.setStatus(0);
+        orderSearchDTO.setStatusS(3);
 
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO, userId, id);
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setCur(1);
-        pageDTO.setUrl("/orderListPage/"+userId);
 
         List<OrderInfo> allList = resultDTO.getData().getOrders();
+        PageDTO pageDTO = PageControlUtil.generatePageDTO(allList, 1);
+
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
                 toIndex(pageDTO.getCur(), allList.size()));
         String json = JSONArray.toJSON(allList).toString();
@@ -133,16 +135,16 @@ public class TradeBuyerController {
         ListUrlDTO urlDTO = new ListUrlDTO();
         urlDTO.setSearchUrl("/orderListSearch/");
         urlDTO.setDetailUrl("/orderDetail/");
+        pageDTO.setUrl("/orderListPage/"+userId);
 
         model.addAttribute("url", urlDTO);
-
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("orders", showList);
         model.addAttribute("list", json);
         model.addAttribute("sidePanel", sidePanelStatusDTO);
         model.addAttribute("page", pageDTO);
 
-        return "tradeBuyer/orderList";
+        return "orderList/orderList";
     }
 
     @RequestMapping("/orderListPage/{userId}")
@@ -164,19 +166,15 @@ public class TradeBuyerController {
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }
-        PageDTO pageDTO = new PageDTO();
-        pageDTO.setCur(Integer.parseInt(page));
-        pageDTO.setUrl("/orderListPage/"+userId);
+        PageDTO pageDTO = generatePageDTO(list, Integer.parseInt(page));
 
         List<OrderInfo> showList = list.subList(fromIndex(pageDTO.getCur()),
                 toIndex(pageDTO.getCur(), list.size()));
 
-        pageDTO.setTot(PageControlUtil.totPage(list.size()));
-        pageDTO.setStyle(PageControlUtil.setStyle(pageDTO));
-
         ListUrlDTO urlDTO = new ListUrlDTO();
         urlDTO.setSearchUrl("/orderListSearch/");
         urlDTO.setDetailUrl("/orderDetail/");
+        pageDTO.setUrl("/orderListPage/"+userId);
 
         model.addAttribute("url", urlDTO);
         model.addAttribute("user", userResultDTO.getData());
@@ -185,32 +183,26 @@ public class TradeBuyerController {
         model.addAttribute("sidePanel", sidePanelStatusDTO);
         model.addAttribute("page", pageDTO);
 
-        return "tradeBuyer/orderList";
+        return "orderList/orderList";
     }
 
     @RequestMapping("/orderDetail/{userId}/{orderId}")
     public String orderDetail(@PathVariable("userId")String userId,
                               @PathVariable("orderId")String orderId,
                               Model model){
-        System.out.println(orderId);
-        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.TRADE_BUYER_ORDER_DETAIL_ID);
-        sidePanelStatusDTO.setUserId(userId);
-
-        ResultDTO<TradeDTO> resultDTO = tradeBuyerService.TradeBuyerPage(userId);
+        ResultDTO<DetailDTO> resultDTO = detailService.getOrderDetail(orderId, userId);
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
         model.addAttribute("user", resultDTO.getData().getUser());
-        model.addAttribute("sidePanel", sidePanelStatusDTO);
-        model.addAttribute("orders", resultDTO.getData().getOrders());
+        model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
+        model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
         return "tradeBuyer/orderDetail";
     }
 
     @RequestMapping("/uploadOrder/{userId}")
-    public String uploadOrder(@PathVariable("userId")String userId, Model model){
+    public String uploadOrder(@PathVariable("userId")String userId,
+                              Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);
@@ -227,7 +219,9 @@ public class TradeBuyerController {
     }
 
     @RequestMapping("/uploadOrderAction/{userId}")
-    public String inputSeller(@RequestParam("file") MultipartFile multipartFile, @PathVariable("userId") String userId, Model model){
+    public String inputSeller(@RequestParam("file") MultipartFile multipartFile,
+                              @PathVariable("userId") String userId,
+                              Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.TRADE_BUYER_ID);

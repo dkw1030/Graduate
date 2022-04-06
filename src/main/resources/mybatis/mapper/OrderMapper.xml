@@ -63,7 +63,10 @@
             orders
         </if>
         where
-        orderStatus = #{status}
+            1=1
+        <if test="status!=-1 or statusS!=-1">
+            and (orderStatus = #{status} or orderStatus = #{statusS})
+        </if>
         <if test="companyId != '' and companyId!=null">
             and sellerId = #{companyId}
         </if>
@@ -91,5 +94,9 @@
             &lt;= #{endTime}
         </if>
         ;
+    </select>
+
+    <select id="getItemsByOrderId" resultType="com.example.demo.model.Model.OrderItem">
+        SELECT * FROM item where orderId = #{orderId};
     </select>
 </mapper>
