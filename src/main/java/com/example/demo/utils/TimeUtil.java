@@ -14,6 +14,14 @@ public class TimeUtil {
         return date.getTime()+"";
     }
 
+    public static String printTime(Date date){
+        if(date==null){
+            return "";
+        }
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        return df.format(date);// new Date()为获取当前系统时间
+    }
+
 //    public static void main(String[] args) {
 //        System.out.println(getTimeStamp());
 //    }

@@ -21,133 +21,34 @@
 </head>
 
 <body class="app">
-<header class="app-header fixed-top">
-    <div th:replace="common/header::header(${user})"></div>
-    <div th:replace="common/sidepanel::sidepanel(${sidePanel})"></div>
-</header><!--//app-header-->
-
-<div class="app-wrapper">
-
-    <div class="app-content pt-3 p-md-3 p-lg-4">
-        <div class="container-xl">
-            <div class="row g-3 mb-4 align-items-center justify-content-between">
-                <div class="col-auto">
-                    <h1 class="app-page-title mb-0">已导入订单</h1>
-                </div>
-            </div><!--//row-->
-            <form class="row g-3 mb-4 align-items-center justify-content-between" th:action="${'/distribution/waitDeliverOrderListSearch/'+user.getUserId()}">
-                <div class="col-auto">
-                    <div class="table-search-form row gx-1 align-items-center">
-
-                        <div class="col-auto">
-                            <label for="search-2">订单编号</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-2" name="orderId" class="form-control search-orders" placeholder="order id">
-                        </div>
-                        <div class="col-auto">
-                            <label for="search-2">订单名</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-2" name="orderName" class="form-control search-orders" placeholder="order id">
-                        </div>
-                        <div class="col-auto">
-                            <label for="search-2">订单简介</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-2" name="orderDes" class="form-control search-orders" placeholder="order id">
-                        </div>
-
-                    </div>
-                </div><!--//col-auto-->
-                <div class="col-auto">
-                    <div class="table-search-form row gx-1 align-items-center">
-                        <div class="col-auto">
-                            <label for="search-3" th:text="${user.getUserRole()==0?'供应商编号':'采购员编号'}"></label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-3" name="id" class="form-control search-orders" placeholder="id">
-                        </div>
-                        <div class="col-auto">
-                            <label for="search-2">物料名称</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-2" name="itemName" class="form-control search-orders" placeholder="item name">
-                        </div>
-                        <div class="col-auto">
-                            <label for="search-4">型号</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="text" id="search-4" name="type" class="form-control search-orders" placeholder="type">
-                        </div>
-                    </div>
-                </div><!--//col-auto-->
-                <div class="col-auto">
-                    <div class="table-search-form row gx-1 align-items-center">
-                        <div class="col-auto">
-                            <label for="search-5">订单发布时间段：  </label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="datetime-local" id="search-5" name="startTime" class="form-control search-orders" placeholder="start time">
-                        </div>
-                        <div class="col-auto">
-                            <label for="search-6">至</label>
-                        </div>
-                        <div class="col-auto">
-                            <input type="datetime-local" id="search-6" name="endTime" class="form-control search-orders" placeholder="start time">
-                        </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn app-btn-secondary">Search</button>
-                        </div>
-                    </div>
-                </div><!--//col-auto-->
-            </form><!--//row-->
-
-            <div class="tab-content" id="orders-table-tab-content">
-                <div class="tab-pane fade show active" role="tabpanel">
-                    <div class="app-card app-card-orders-table shadow-sm mb-5">
-                        <div class="app-card-body">
-                            <div class="table-responsive">
-                                <table class="table app-table-hover mb-0 text-left">
-                                    <thead>
-                                    <tr>
-                                        <th class="cell">订单编号</th>
-                                        <th class="cell">订单名</th>
-                                        <th class="cell">订单介绍</th>
-                                        <th class="cell">采购员编号</th>
-                                        <th class="cell">供应商编号</th>
-                                        <th class="cell">详情</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="item:${orders}">
-                                        <td class="cell" th:text="${item.getOrderId()}"></td>
-                                        <td class="cell" th:text="${item.getOrderName()}"></td>
-                                        <td class="cell"><span class="truncate" th:text="${item.getOrderDescription()}"></span></td>
-                                        <td class="cell" th:text="${item.getBuyerId()}"></td>
-                                        <td class="cell" th:text="${item.getSellerId()}"></td>
-                                        <td class="cell"><a class="btn-sm app-btn-secondary" th:href="${'/orderDetail/'+user.getUserId+'/'+item.getOrderId}">View</a></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div><!--//table-responsive-->
-
-                        </div><!--//app-card-body-->
-                    </div><!--//app-card-->
-                    <div th:replace="/common/page::page(${page},${list})"></div>
-
-                </div><!--//tab-pane-->
-            </div><!--//tab-content-->
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-auto">
+            <h1 class="app-page-title mb-0">订单详情</h1>
         </div>
-    </div><!--//app-content-->
+        <div class="col-auto">
+            <div class="page-utilities">
+                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                    <div class="col-auto">
+                        <a class="btn app-btn-primary" th:href="${'/download/'+order.getOrderId()}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path fill-rule="evenodd" d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+                        </svg>导出订单</a>
+                    </div>
+                </div><!--//row-->
+            </div><!--//table-utilities-->
+        </div><!--//col-auto-->
+    </div><!--//row-->
+    <div th:replace="/common/orderDetail::orderDetail(${order},${item})"></div>
 
-    <footer class="app-footer">
-        <div th:replace="common/footer::footer">
-        </div>
-    </footer><!--//app-footer-->
 
-</div><!--//app-wrapper-->
+</div>
 
+
+<footer class="app-footer">
+    <div th:replace="common/footer::footer">
+    </div>
+</footer><!--//app-footer-->
 
 <!-- Javascript -->
 <script th:src="@{/assets/plugins/popper.min.js}"></script>
