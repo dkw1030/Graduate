@@ -99,4 +99,8 @@
     <select id="getItemsByOrderId" resultType="com.example.demo.model.Model.OrderItem">
         SELECT * FROM item where orderId = #{orderId};
     </select>
+
+    <update id="changeProcess" parameterType="com.example.demo.model.DTO.ItemChangeDTO">
+        update item set process = #{process} where orderId = #{orderId} and itemName = #{itemName}
+    </update>
 </mapper>

@@ -1,5 +1,6 @@
 package com.example.demo.service.Upper;
 
+import com.example.demo.model.DTO.ItemChangeDTO;
 import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.TradeDTO;
@@ -44,6 +45,22 @@ public class OrderService {
             LogUtil.errorLog(e, getClass().getName());
         }
         resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> changeProcess(ItemChangeDTO itemChangeDTO){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try {
+            if(itemChangeDTO.getProcess()>100){
+                itemChangeDTO.setProcess(100);
+            }else if(itemChangeDTO.getProcess()<0){
+                itemChangeDTO.setProcess(0);
+            }
+            resultDTO = orderBasicService.changeProcess(itemChangeDTO);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
         return resultDTO;
     }
 }

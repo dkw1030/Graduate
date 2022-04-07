@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import com.example.demo.model.DTO.ItemChangeDTO;
 import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.Model.OrderItem;
 import com.example.demo.model.Model.resultType.OrderInfo;
@@ -13,9 +14,8 @@ import java.util.List;
 public interface OrderMapper {
     int insertOrder(OrderInfo orderInfo);
     int insertItems(List<OrderItem> orderItems);
-//    List<OrderInfo> getOrderByBuyerId(String userId);
-//    List<OrderInfo> getOrderByCompanyId(String companyId);
     List<OrderInfo> getOrderByOrderSearchDTO(OrderSearchDTO orderSearchDTO);
     List<String> getOrderListByItem(OrderSearchDTO orderSearchDTO);
     List<OrderItem> getItemsByOrderId(String orderId);
+    int changeProcess(ItemChangeDTO item);
 }

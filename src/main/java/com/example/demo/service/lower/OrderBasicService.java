@@ -1,6 +1,7 @@
 package com.example.demo.service.lower;
 
 import com.example.demo.mapper.OrderMapper;
+import com.example.demo.model.DTO.ItemChangeDTO;
 import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.Model.Order;
@@ -115,6 +116,14 @@ public class OrderBasicService {
         LogUtil.log(getClass().getName(), "item insert finish\n" + itemsResult);
 
         resultDTO.setData("success");
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> changeProcess(ItemChangeDTO itemChangeDTO) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        int result = orderMapper.changeProcess(itemChangeDTO);
+        System.out.println(result);
         resultDTO.setCode(0);
         return resultDTO;
     }

@@ -191,6 +191,27 @@ public class ProcessController {
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
         model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
-        return "process/processOrderDetail";
+        return "process/processSellerOrderDetail";
+    }
+
+    @RequestMapping("/changeProcess")
+    public String processChange(@RequestParam("process")int process,
+                                @RequestParam("orderId")String orderId,
+                                @RequestParam("userId")String userId,
+                                @RequestParam("itemName")String itemName,
+                                Model model){
+        ItemChangeDTO itemChangeDTO = new ItemChangeDTO();
+        itemChangeDTO.setProcess(process);
+        itemChangeDTO.setItemName(itemName);
+        itemChangeDTO.setOrderId(orderId);
+        ResultDTO<String> changeResult = orderService.changeProcess(itemChangeDTO);
+        ResultDTO<DetailDTO> resultDTO = detailService.getOrderDetail(orderId, userId);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("user", resultDTO.getData().getUser());
+        model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
+        model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
+        return "process/processSellerOrderDetail";
     }
 }

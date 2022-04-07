@@ -67,7 +67,7 @@ public class TradeBuyerService {
                 resultDTO.setCode(code);
                 return resultDTO;
             }
-            File file = new File(Switcher.FilePathSwitcher.cloud_file_path_company + multipartFile.getOriginalFilename());
+            File file = new File(Switcher.FilePathSwitcher.clout_file_path_order + multipartFile.getOriginalFilename());
             FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
             code = -2;
             //文件转数据
