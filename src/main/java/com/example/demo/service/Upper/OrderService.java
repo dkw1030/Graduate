@@ -35,7 +35,7 @@ public class OrderService {
                 orderSearchDTO.setCompanyId(id);
             }else {
                 orderSearchDTO.setBuyerId(id);
-                orderSearchDTO.setCompanyId(userId);
+                orderSearchDTO.setCompanyId(userResultDTO.getData().getCompanyId());
             }
 
             ResultDTO<List<OrderInfo>> orderResult = orderBasicService.searchOrders(orderSearchDTO);

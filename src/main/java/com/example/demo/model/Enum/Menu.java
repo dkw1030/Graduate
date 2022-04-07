@@ -13,9 +13,9 @@ public enum Menu {
     TRADE_BUYER(MenuSwitcher.TRADE_BUYER_ID, "#", "采购协同", MenuSwitcher.TRADE_ICON, Arrays.asList(
             SubMenu.TRADE_BUYER_ORDER_DETAIL,
             SubMenu.TRADE_BUYER_INPUT_ORDER)),
-    TRADE_SELLER(MenuSwitcher.TRADE_SELLER_ID, "/tradeSeller/tradeSeller", "销售协同", MenuSwitcher.TRADE_ICON, Collections.emptyList()),
+    TRADE_SELLER(MenuSwitcher.TRADE_SELLER_ID, "/sellerOrderList", "销售协同", MenuSwitcher.TRADE_ICON, Collections.emptyList()),
 
-    PROCESS(MenuSwitcher.PROCESS_ID, "/process/process", "订单进度", MenuSwitcher.PROCESS_ICON, Collections.emptyList()),
+    PROCESS(MenuSwitcher.PROCESS_ID, "/process/processOrderList", "订单进度", MenuSwitcher.PROCESS_ICON, Collections.emptyList()),
 
     INFO_SELLER(MenuSwitcher.INFO_SELLER_ID, "#", "供应商档案", MenuSwitcher.INFO_ICON, Arrays.asList(
             SubMenu.INFO_SELLER_SELLER_DETAIL,

@@ -44,9 +44,9 @@ public class DistributionController {
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
 
-
         orderSearchDTO.setStatus(4);
         orderSearchDTO.setStatusS(7);
+        orderSearchDTO.setWitchTime(1);
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO,userId, null);
 
         if(resultDTO.getData().getUser().getUserRole()==0){
@@ -94,11 +94,7 @@ public class DistributionController {
                                   @RequestParam("startTime") String startTime,
                                   @RequestParam("endTime") String endTime,
                                   Model model){
-        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID);
-        sidePanelStatusDTO.setUserId(userId);
+
 
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
         orderSearchDTO.setStatus(4);
@@ -116,6 +112,16 @@ public class DistributionController {
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID);
+        sidePanelStatusDTO.setUserId(userId);
+        if(resultDTO.getData().getUser().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+
         List<OrderInfo> allList =resultDTO.getData().getOrders();
         PageDTO pageDTO = generatePageDTO(allList, 1);
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
@@ -147,7 +153,6 @@ public class DistributionController {
                 JsonListUtil.jsonToList(json, OrderInfo.class);
 
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID);
         sidePanelStatusDTO.setUserId(userId);
@@ -156,6 +161,12 @@ public class DistributionController {
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }
+        if(userResultDTO.getData().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+
         PageDTO pageDTO = generatePageDTO(list, Integer.parseInt(page));
 
         List<OrderInfo> showList = list.subList(fromIndex(pageDTO.getCur()),
@@ -200,6 +211,7 @@ public class DistributionController {
 
 
         orderSearchDTO.setStatus(5);
+        orderSearchDTO.setWitchTime(2);
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO,userId, null);
 
         if(resultDTO.getData().getUser().getUserRole()==0){
@@ -248,10 +260,6 @@ public class DistributionController {
                                   @RequestParam("endTime") String endTime,
                                   Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID);
-        sidePanelStatusDTO.setUserId(userId);
 
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
         orderSearchDTO.setStatus(5);
@@ -268,6 +276,15 @@ public class DistributionController {
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
+        if(resultDTO.getData().getUser().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
         List<OrderInfo> allList =resultDTO.getData().getOrders();
         PageDTO pageDTO = generatePageDTO(allList, 1);
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
@@ -299,7 +316,7 @@ public class DistributionController {
                 JsonListUtil.jsonToList(json, OrderInfo.class);
 
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID);
         sidePanelStatusDTO.setUserId(userId);
@@ -308,6 +325,12 @@ public class DistributionController {
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }
+        if(userResultDTO.getData().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+
         PageDTO pageDTO = generatePageDTO(list, Integer.parseInt(page));
 
         List<OrderInfo> showList = list.subList(fromIndex(pageDTO.getCur()),
@@ -351,7 +374,7 @@ public class DistributionController {
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
 
-
+        orderSearchDTO.setWitchTime(3);
         orderSearchDTO.setStatus(6);
         ResultDTO<TradeDTO> resultDTO = orderService.OrderSearchPage(orderSearchDTO,userId, null);
 
@@ -401,10 +424,6 @@ public class DistributionController {
                                   @RequestParam("endTime") String endTime,
                                   Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID);
-        sidePanelStatusDTO.setUserId(userId);
 
         OrderSearchDTO orderSearchDTO = new OrderSearchDTO();
         orderSearchDTO.setStatus(6);
@@ -421,6 +440,15 @@ public class DistributionController {
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
+        if(resultDTO.getData().getUser().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
+        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
         List<OrderInfo> allList =resultDTO.getData().getOrders();
         PageDTO pageDTO = generatePageDTO(allList, 1);
         List<OrderInfo> showList = allList.subList(fromIndex(pageDTO.getCur()),
@@ -452,7 +480,7 @@ public class DistributionController {
                 JsonListUtil.jsonToList(json, OrderInfo.class);
 
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.DISTRIBUTION_ID);
         sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID);
         sidePanelStatusDTO.setUserId(userId);
@@ -461,6 +489,12 @@ public class DistributionController {
         if(userResultDTO.getCode() < 0){
             return "error/404";
         }
+        if(userResultDTO.getData().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else {
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+
         PageDTO pageDTO = generatePageDTO(list, Integer.parseInt(page));
 
         List<OrderInfo> showList = list.subList(fromIndex(pageDTO.getCur()),

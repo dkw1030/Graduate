@@ -18,7 +18,7 @@ public class OrderSearchDTO {
 
     /**
      * 0 上传时间
-     * 1 确认时间
+     * 1 用户确认时间
      * 2 发货时间
      * 3 完成时间
      */

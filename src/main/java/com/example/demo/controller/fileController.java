@@ -87,7 +87,7 @@ public class fileController {
     @ResponseBody
     @RequestMapping("/download/{fileName}")
     public void downloadFile(@PathVariable("fileName")String fileName, HttpServletResponse response) throws Exception {
-        String realPath = "D:\\Project\\FileArea\\path1";
+        String realPath = "D:\\Project\\FileArea\\Graduate\\Company";
         // 1.去指定目录读取文件
         File file = new File(realPath, fileName);
         // 2.将文件读取为文件输入流

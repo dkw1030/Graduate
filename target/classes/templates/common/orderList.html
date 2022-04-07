@@ -28,7 +28,7 @@
                             <td class="cell" th:text="${item.getSellerId()}"></td>
                             <td class="cell" th:if="${item.getOrderStatus()==3 or item.getOrderStatus()==7}"><span class="badge bg-danger">驳回</span></td>
                             <td class="cell" th:if="${item.getOrderStatus()!=3 and item.getOrderStatus()!=7}"></td>
-                            <td class="cell"><a class="btn-sm app-btn-secondary" th:href="${'/orderDetail/'+user.getUserId()+'/'+item.getOrderId()}" target="_blank">View</a></td>
+                            <td class="cell"><a class="btn-sm app-btn-secondary" th:href="${url.getDetailUrl()+user.getUserId()+'/'+item.getOrderId()}" target="_blank">View</a></td>
                         </tr>
                         </tbody>
                     </table>
