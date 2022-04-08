@@ -102,4 +102,15 @@ public class InfoSellerService {
         resultDTO.setCode(0);
         return resultDTO;
     }
+
+    public ResultDTO<String> addCount(int type, String orderId){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            resultDTO = infoSellerBasicService.addCount(type, orderId);
+        }catch (Exception e){
+            LogUtil.errorLog(e,getClass().getName());
+        }
+        return resultDTO;
+    }
 }

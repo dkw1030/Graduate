@@ -41,7 +41,17 @@
     </div><!--//row-->
     <div th:replace="/common/orderDetail::orderDetail(${order},${item})"></div>
 
-
+    <div class="row g-0" th:if="${user.getUserRole()!=0 and user.getCompanyId().equals(order.getSellerId())}">
+        <div class="col-12 h-100 auth-background-col">
+            <br>
+            <br>
+            <br>
+            <div class="col-auto">
+                <a th:if="${show==0}" class="btn" style="width:300px;pointer-events: none;cursor: default;color:gray;background-color: #20c997" href="#">生产未完成</a>
+                <a th:if="${show==1}" class="btn app-btn-primary" style="width:300px;" th:href="${'/confirm/'+user.getUserId()+'/'+order.getOrderId()+'/5'}">发货</a>
+            </div>
+        </div><!--//auth-background-col-->
+    </div><!--//auth-form-container-->
 </div>
 
 

@@ -18,4 +18,8 @@ public interface InfoSellerMapper {
     int insertAccount(List<User> user);
     List<CompanyOverView> getAllCompanyOverViewList();
     List<CompanyOverView> getCompanyOverViewList(String companyId, String companyName);
+    int addConfirmed(String orderId);
+    int addRejected(String orderId);
+    int addCompleted(String orderId);
+    int addFailed(String orderId);
 }

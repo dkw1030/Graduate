@@ -19,6 +19,10 @@
             )
     </insert>
 
+    <delete id="deleteItems" parameterType="java.lang.String">
+        delete from item where orderId = #{orderId}
+    </delete>
+
     <insert id="insertItems" parameterType="java.util.List">
         replace into item
         (orderId, number, itemName, itemType, cost, process)
@@ -102,5 +106,13 @@
 
     <update id="changeProcess" parameterType="com.example.demo.model.DTO.ItemChangeDTO">
         update item set process = #{process} where orderId = #{orderId} and itemName = #{itemName}
+    </update>
+
+    <update id="updateFirstTime">
+        update orders set firstTime = #{value} where orderId = #{orderId}
+    </update>
+
+    <update id="updateOrderStatus">
+        update orders set orderStatus = #{value} where orderId = #{orderId}
     </update>
 </mapper>

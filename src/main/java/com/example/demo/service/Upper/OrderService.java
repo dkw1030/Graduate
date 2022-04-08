@@ -63,4 +63,28 @@ public class OrderService {
         }
         return resultDTO;
     }
+
+    public ResultDTO<String> updateFirstTime(String orderId, int value){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            resultDTO = orderBasicService.updateFirstTime(orderId, value);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<String> updateOrderStatus(String orderId, int value){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            resultDTO = orderBasicService.updateOrderStatus(orderId, value);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
+        return resultDTO;
+    }
+
+
 }

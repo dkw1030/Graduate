@@ -104,4 +104,21 @@ public class InfoSellerBasicService {
         return resultDTO;
 
     }
+
+    public ResultDTO<String> addCount(int type,String orderId) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        switch (type){
+            case 1:
+                infoSellerMapper.addConfirmed(orderId);
+            case 2:
+                infoSellerMapper.addRejected(orderId);
+            case 3:
+                infoSellerMapper.addCompleted(orderId);
+            case 4:
+                infoSellerMapper.addFailed(orderId);
+        }
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
 }

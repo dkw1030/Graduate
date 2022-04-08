@@ -70,4 +70,19 @@
         ;
     </select>
 
+    <update id="addConfirmed">
+        update company set orderConfirmed = orderConfirmed + 1 where companyId = #{orderId}
+    </update>
+
+    <update id="addRejected">
+        update company set orderRejected = orderRejected + 1 where companyId = #{orderId}
+    </update>
+
+    <update id="addCompleted">
+        update company set orderCompleted = orderCompleted + 1 where companyId = #{orderId}
+    </update>
+
+    <update id="addFailed">
+        update company set orderFailed = orderFailed + 1 where companyId = #{orderId}
+    </update>
 </mapper>

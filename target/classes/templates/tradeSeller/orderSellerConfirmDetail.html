@@ -24,17 +24,11 @@
 <div class="app-content pt-3 p-md-3 p-lg-4">
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0">订单详情</h1>
+            <h1 class="app-page-title mb-0">确认订单</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                    <!--                    <div class="col-auto">-->
-                    <!--                        <a class="btn app-btn-primary" th:href="${'/upload/'+order.getOrderId()}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
-                    <!--                            <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>-->
-                    <!--                            <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>-->
-                    <!--                        </svg>更新进度</a>-->
-                    <!--                    </div>-->
                     <div class="col-auto">
                         <a class="btn app-btn-primary" th:href="${'/download/'+user.getUserId()+'/'+order.getOrderId()}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-upload mr-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
@@ -46,7 +40,26 @@
         </div><!--//col-auto-->
     </div><!--//row-->
     <div th:replace="/common/orderDetail::orderDetail(${order},${item})"></div>
-
+    <div class="row g-0">
+        <div class="col-12 col-lg-6 h-100 auth-background-col">
+            <br>
+            <br>
+            <br>
+            <div class="col-auto">
+                <a th:if="${order.getOrderStatus()!=1}" class="btn" style="width:300px;pointer-events: none;cursor: default;color:gray;background-color: #20c997" href="#">确认订单</a>
+                <a th:if="${order.getOrderStatus()==1}" class="btn app-btn-primary" style="width:300px;" th:href="${'/confirm/'+user.getUserId()+'/'+order.getOrderId()+'/4'}">确认订单</a>
+            </div>
+        </div><!--//auth-background-col-->
+        <div class="col-12 col-lg-6 h-100 auth-background-col">
+            <br>
+            <br>
+            <br>
+            <div class="col-auto">
+                <a th:if="${order.getOrderStatus()!=1}" class="btn" style="width:300px;pointer-events: none;cursor: default;color:gray;background-color: #20c997" href="#">驳回订单</a>
+                <a th:if="${order.getOrderStatus()==1}" class="btn app-btn-primary" style="width:300px;" th:href="${'/confirm/'+user.getUserId()+'/'+order.getOrderId()+'/3'}">驳回订单</a>
+            </div>
+        </div><!--//auth-background-col-->
+    </div><!--//auth-form-container-->
 
 </div>
 

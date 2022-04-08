@@ -120,10 +120,64 @@ public class OrderBasicService {
         return resultDTO;
     }
 
+    public ResultDTO<String> changeOrder(List<List<String>> data) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        resultDTO.setData("failed");
+
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setOrderId(data.get(1).get(0));
+        orderInfo.setOrderName(data.get(1).get(1));
+        orderInfo.setOrderDescription(data.get(3).get(2));
+        orderInfo.setOrderStatus(0);
+        orderInfo.setBuyerId(data.get(3).get(1));
+        orderInfo.setSellerId(data.get(3).get(0));
+        orderInfo.setOrderUploadTime(new Date());
+        orderInfo.setFirstTime(0);
+
+        List<OrderItem> orderItems = new ArrayList<OrderItem>();
+        for (int i = 5; i < data.size(); i++) {
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrderId(orderInfo.getOrderId());
+            orderItem.setItemName(data.get(i).get(0));
+            orderItem.setItemType(data.get(i).get(1));
+            orderItem.setNumber(Integer.parseInt(data.get(i).get(2)));
+            orderItem.setCost(Integer.parseInt(data.get(i).get(3)));
+            orderItem.setProcess(0);
+            orderItems.add(orderItem);
+        }
+        int orderResult = orderMapper.insertOrder(orderInfo);
+        LogUtil.log(getClass().getName(), "order insert finish\n" + orderResult);
+        int deleteItemResult = orderMapper.deleteItems(orderInfo.getOrderId());
+        LogUtil.log(getClass().getName(), "item insert finish\n" + deleteItemResult);
+        int itemsResult = orderMapper.insertItems(orderItems);
+        LogUtil.log(getClass().getName(), "item insert finish\n" + itemsResult);
+
+        resultDTO.setData("success");
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
     public ResultDTO<String> changeProcess(ItemChangeDTO itemChangeDTO) throws Exception{
         ResultDTO<String> resultDTO = new ResultDTO<>();
         int result = orderMapper.changeProcess(itemChangeDTO);
         System.out.println(result);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> updateFirstTime(String orderId, int value) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        int result = orderMapper.updateFirstTime(orderId, value);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> updateOrderStatus(String orderId, int value) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        int result = orderMapper.updateOrderStatus(orderId, value);
         resultDTO.setCode(0);
         return resultDTO;
     }

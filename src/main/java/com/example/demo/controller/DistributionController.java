@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.*;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.OrderItem;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.OrderInfo;
 import com.example.demo.service.Upper.*;
@@ -70,7 +71,7 @@ public class DistributionController {
         String json = JSONArray.toJSON(allList).toString();
 
         ListUrlDTO urlDTO = new ListUrlDTO();
-        urlDTO.setDetailUrl("/distribution/waitDeliverOrderListDetail/");
+        urlDTO.setDetailUrl("/distribution/waitDeliverOrderDetail/");
         urlDTO.setSearchUrl("/distribution/waitDeliverOrderListSearch/");
         pageDTO.setUrl("/distribution/waitDeliverOrderListPage/"+userId);
 
@@ -129,7 +130,7 @@ public class DistributionController {
         String json = JSONArray.toJSON(allList).toString();
 
         ListUrlDTO urlDTO = new ListUrlDTO();
-        urlDTO.setDetailUrl("/distribution/waitDeliverOrderListDetail/");
+        urlDTO.setDetailUrl("/distribution/waitDeliverOrderDetail/");
         urlDTO.setSearchUrl("/distribution/waitDeliverOrderListSearch/");
         pageDTO.setUrl("/distribution/waitDeliverOrderListPage/"+userId);
 
@@ -172,7 +173,7 @@ public class DistributionController {
         List<OrderInfo> showList = list.subList(fromIndex(pageDTO.getCur()),
                 toIndex(pageDTO.getCur(), list.size()));
         ListUrlDTO urlDTO = new ListUrlDTO();
-        urlDTO.setDetailUrl("/distribution/waitDeliverOrderListDetail/");
+        urlDTO.setDetailUrl("/distribution/waitDeliverOrderDetail/");
         urlDTO.setSearchUrl("/distribution/waitDeliverOrderListSearch/");
         pageDTO.setUrl("/distribution/waitDeliverOrderListPage/"+userId);
 
@@ -186,7 +187,7 @@ public class DistributionController {
         return "/orderList/orderList";
     }
 
-    @RequestMapping("/distribution/waitDeliverOrderListDetail/{userId}/{orderId}")
+    @RequestMapping("/distribution/waitDeliverOrderDetail/{userId}/{orderId}")
     public String orderDetail(@PathVariable("userId")String userId,
                               @PathVariable("orderId")String orderId,
                               Model model){
@@ -194,10 +195,19 @@ public class DistributionController {
         if(resultDTO.getCode() < 0){
             return "error/404";
         }
+        int show = 1;
+        for (OrderItem item :
+                resultDTO.getData().getOrder().getOrderItems()) {
+            if(item.getProcess()<100){
+                show = 0;
+                break;
+            }
+        }
+        model.addAttribute("show", show);
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
         model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
-        return "tradeBuyer/orderDetail";
+        return "distribution/waitDeliverOrderDetail";
     }
 
     /**
@@ -361,7 +371,7 @@ public class DistributionController {
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
         model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
-        return "tradeBuyer/orderDetail";
+        return "distribution/deliveringOrderDetail";
     }
 
 
@@ -525,6 +535,6 @@ public class DistributionController {
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
         model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
-        return "tradeBuyer/orderDetail";
+        return "distribution/waitReceiveOrderDetail";
     }
 }

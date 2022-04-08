@@ -93,9 +93,61 @@ public class TradeBuyerService {
         return resultDTO;
     }
 
+    public ResultDTO<String> changeOrderInfo(MultipartFile multipartFile, String orderId){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        int code = -1;
+        resultDTO.setCode(-1);
+        try {
+            if(multipartFile.isEmpty()){
+                resultDTO.setData("上传失败，请选择文件！");
+                resultDTO.setCode(code);
+                return resultDTO;
+            }
+            File file = new File(Switcher.FilePathSwitcher.clout_file_path_order + multipartFile.getOriginalFilename());
+            FileUtils.copyInputStreamToFile(multipartFile.getInputStream(), file);
+            code = -2;
+            //文件转数据
+            List<List<String>> data = FileUtil.ReadExcel(file.getPath());
+            LogUtil.log(getClass().getName(), "generate data success\n" + FileUtil.outData(data));
+
+            //核验数据是否有误
+            ResultDTO<String> checkResult = checkOrderData(data, orderId);
+            if(checkResult.getCode() < 0){
+                code = 1;
+                resultDTO.setCode(1);
+                resultDTO.setData(checkResult.getData());
+                return resultDTO;
+            }
+            //对data进行处理
+            ResultDTO<String> insertResult = orderBasicService.changeOrder(data);
+            resultDTO.setCode(0);
+            resultDTO.setData("上传成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultDTO.setData("文件上传失败");
+            LogUtil.errorLog(e, getClass().getName(), code);
+        }
+
+        return resultDTO;
+    }
+
     public ResultDTO<String> checkOrderData(List<List<String>> data){
         ResultDTO<String> resultDTO = new ResultDTO<>();
         resultDTO.setCode(0);
+        resultDTO.setData("成功");
+        return resultDTO;
+    }
+
+    public ResultDTO<String> checkOrderData(List<List<String>> data, String orderId){
+        ResultDTO<String> resultDTO = checkOrderData(data);
+        if(resultDTO.getCode()<0){
+            return resultDTO;
+        }
+        if (!data.get(1).get(0).equals(orderId)){
+            resultDTO.setCode(-1);
+            resultDTO.setData("order id不正确");
+            return resultDTO;
+        }
         resultDTO.setData("成功");
         return resultDTO;
     }

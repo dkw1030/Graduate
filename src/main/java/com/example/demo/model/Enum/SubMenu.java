@@ -13,7 +13,7 @@ public enum SubMenu {
     PROCESS_SELLER_INPUT_PROCESS(Switcher.MenuSwitcher.PROCESS_SELLER_INPUT_PROCESS_ID, "/process/process", "导入进度"),
 
     DISTRIBUTION_WAIT_DELIVER(Switcher.MenuSwitcher.DISTRIBUTION_WAIT_DELIVER_ID, "/distribution/waitDeliverOrderList", "待发货"),
-    DISTRIBUTION_DELIVERING(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID, "/distribution/deliveringOrderList", "运输中"),
+    DISTRIBUTION_DELIVERING(Switcher.MenuSwitcher.DISTRIBUTION_DELIVERING_ID, "/distribution/deliveringOrderList", "待收货"),
     DISTRIBUTION_RESULT(Switcher.MenuSwitcher.DISTRIBUTION_RESULT_ID, "/distribution/waitReceiveOrderList", "已签收");
 
     public final int id;

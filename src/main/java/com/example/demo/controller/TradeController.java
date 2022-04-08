@@ -375,7 +375,7 @@ public class TradeController {
         model.addAttribute("user", resultDTO.getData().getUser());
         model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
         model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
-        return "tradeBuyer/orderDetail";
+        return "tradeSeller/orderSellerConfirmDetail";
     }
 
     @RequestMapping("/uploadOrder/{userId}")
@@ -420,4 +420,31 @@ public class TradeController {
         model.addAttribute("msg", resultDTO.getData());
         return "tradeBuyer/uploadOrder";
     }
+
+    @RequestMapping("/changeOrderAction/{userId}/{orderId}")
+    public String changeOrder(@RequestParam("file") MultipartFile multipartFile,
+                              @PathVariable("userId") String userId,
+                              @PathVariable("orderId") String orderId,
+                              Model model){
+
+        ResultDTO<String> changeResultDTO = tradeBuyerService.changeOrderInfo(multipartFile, orderId);
+        if(changeResultDTO.getCode() < 0){
+            return "error/404";
+        }
+        ResultDTO<User> userResultDTO = accountService.getUserById(userId);
+        if(userResultDTO.getCode() < 0){
+            return "error/404";
+        }
+        ResultDTO<DetailDTO> resultDTO = detailService.getOrderDetail(orderId, userId);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("user", resultDTO.getData().getUser());
+        model.addAttribute("order", resultDTO.getData().getOrder().getOrderInfo());
+        model.addAttribute("item", resultDTO.getData().getOrder().getOrderItems());
+        model.addAttribute("msg", changeResultDTO.getData());
+        return "tradeBuyer/orderDetail";
+    }
+
+
 }
