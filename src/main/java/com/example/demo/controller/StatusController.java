@@ -36,6 +36,7 @@ public class StatusController {
         int f = resultDTO.getData().getOrder().getOrderInfo().getFirstTime();
         ResultDTO<String> temp = new ResultDTO<>();
         int curStatus = resultDTO.getData().getOrder().getOrderInfo().getOrderStatus();
+        String companyId = resultDTO.getData().getOrder().getOrderInfo().getSellerId();
         switch (status){
             case 3:
                 if(curStatus!= 1){
@@ -46,7 +47,7 @@ public class StatusController {
                     if(temp.getCode() < 0){
                         return "error/404";
                     }
-                    temp = infoSellerService.addCount(2,orderId);
+                    temp = infoSellerService.addCount(2,companyId);
                     if(temp.getCode() < 0){
                         return "error/404";
                     }
@@ -57,7 +58,7 @@ public class StatusController {
                     return "error/404";
                 }
                 if(f==0){
-                    temp = infoSellerService.addCount(1,orderId);
+                    temp = infoSellerService.addCount(1,companyId);
                     if(temp.getCode() < 0){
                         return "error/404";
                     }
@@ -73,7 +74,7 @@ public class StatusController {
                     return "error/404";
                 }
                 if(f==0){
-                    temp = infoSellerService.addCount(3,orderId);
+                    temp = infoSellerService.addCount(3,companyId);
                     if(temp.getCode() < 0){
                         return "error/404";
                     }
@@ -84,7 +85,7 @@ public class StatusController {
                     return "error/404";
                 }
                 if(f==0){
-                    temp = infoSellerService.addCount(4,orderId);
+                    temp = infoSellerService.addCount(4,companyId);
                     if(temp.getCode() < 0){
                         return "error/404";
                     }

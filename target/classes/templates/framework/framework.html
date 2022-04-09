@@ -17,6 +17,7 @@
 
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" th:href="@{/assets/css/portal.css}">
+    <link type="text/css" th:href="@{/assets/css/style.css}" rel="stylesheet" />
 
 </head>
 
@@ -27,14 +28,35 @@
 </header><!--//app-header-->
 
 <div class="app-wrapper">
-
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
+            <div class="tree">
+                <ul>
+                    <li>
+                        <a th:utext="${#strings.replace(company.getCompanyInfo().getCompanyName()+'\n老板:'+company.getBoss().getUserName(),'\n','<br>')}" th:href="${'/userInfo/'+company.getBoss().getUserId()+'1'}" target="_blank"></a>
+                        <ul>
+                            <li th:each="dep:${company.getDepartments()}">
+                                <a th:text="${dep.getDepartmentName()}"  th:href="${(user.getUserRole()==1 or user.getUserRole()==3)?'/addUser/'+company.getCompanyInfo().getCompanyId()+'/'+dep.getDepartmentId():''}" target="_blank"></a>
+                                <ul class="vertical">
+                                    <li><a th:href="${'/userInfo/'+dep.getMonitor().getUserId()+'/1'}" target="_blank" th:text="${'主管：'+dep.getMonitor().getUserName()}">Human Resources</a></li>
+                                    <li th:each="employee:${dep.getUsers()}">
+                                        <a th:href="${'/userInfo/'+employee.getUserId()+'/1'}" target="_blank" th:text="${employee.getUserName()}"></a>
+                                    </li>
 
+<!--                                    <li><a href="#">Finance</a></li>-->
+<!--                                    <li><a href="#">Marketing</a></li>-->
+<!--                                    <li><a href="#">IT/IS</a></li>-->
+<!--                                    <li><a href="#">Service Delivery</a></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div><!--//app-content-->
 
-    <footer class="app-footer">
+    <footer class="app-footer" style="clear: both;height: 120px;margin-top: -120px;">
         <div th:replace="common/footer::footer">
         </div>
     </footer><!--//app-footer-->

@@ -1,8 +1,10 @@
 package com.example.demo.service.Upper;
 
 import com.example.demo.model.Constant.Switcher;
+import com.example.demo.model.DTO.FrameworkDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SellerListDTO;
+import com.example.demo.model.Model.CompanyDetail;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.lower.AccountBasicService;
@@ -110,6 +112,24 @@ public class InfoSellerService {
             resultDTO = infoSellerBasicService.addCount(type, orderId);
         }catch (Exception e){
             LogUtil.errorLog(e,getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<FrameworkDTO> getCompanyDetail(String userId){
+        ResultDTO<FrameworkDTO> resultDTO = new ResultDTO<>();
+        FrameworkDTO frameworkDTO = new FrameworkDTO();
+        resultDTO.setData(frameworkDTO);
+        resultDTO.setCode(-1);
+        try {
+            ResultDTO<User> userById = accountBasicService.getUserById(userId);
+            User user = userById.getData();
+            frameworkDTO.setUser(user);
+            ResultDTO<CompanyDetail> companyDetail = infoSellerBasicService.getCompanyDetail(user.getCompanyId());
+            frameworkDTO.setCompanyDetail(companyDetail.getData());
+            resultDTO.setCode(0);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
         }
         return resultDTO;
     }

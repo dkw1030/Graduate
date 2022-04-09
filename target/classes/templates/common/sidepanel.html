@@ -50,24 +50,9 @@
                 <ul class="app-menu footer-menu list-unstyled">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="settings.html">
-                            <span th:replace="~{common/sidepanelIcon::settings}"></span>
-                            <span class="nav-link-text">Settings</span>
-                        </a><!--//nav-link-->
-                    </li><!--//nav-item-->
-                    <li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="">
-                            <span th:replace="~{common/sidepanelIcon::download}"></span>
-                            <span class="nav-link-text">Download</span>
-                        </a><!--//nav-link-->
-                    </li><!--//nav-item-->
-                    <li class="nav-item">
-                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="">
-                            <span th:replace="~{common/sidepanelIcon::framework}"></span>
-
-                            <span class="nav-link-text">License</span>
+                        <a class="nav-link" th:href="${'/help'+status.getUserId()}">
+                            <span th:replace="~{common/sidepanelIcon::help}"></span>
+                            <span class="nav-link-text">Help</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
                 </ul><!--//footer-menu-->

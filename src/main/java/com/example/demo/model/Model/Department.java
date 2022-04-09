@@ -6,5 +6,7 @@ import lombok.Data;
 import java.util.List;
 @Data
 public class Department extends DepartmentInfo {
+    private User monitor;
+
     private List<User> users;
 }

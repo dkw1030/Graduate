@@ -32,4 +32,21 @@ public class MainController {
 
         return "/main/home";
     }
+
+    @RequestMapping("/help/{userId}")
+    public String help(@PathVariable("userId") String userId, Model model){
+        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
+        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
+        sidePanelStatusDTO.setUserId(userId);
+
+        ResultDTO<User> userResult = mainService.mainPage(userId);
+        if(userResult.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("sidePanel", sidePanelStatusDTO);
+        model.addAttribute("user",userResult.getData());
+
+        return "/main/help";
+    }
 }

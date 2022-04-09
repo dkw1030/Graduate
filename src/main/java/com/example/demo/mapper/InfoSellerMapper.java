@@ -22,4 +22,7 @@ public interface InfoSellerMapper {
     int addRejected(String orderId);
     int addCompleted(String orderId);
     int addFailed(String orderId);
+    CompanyInfo getCompanyById(String companyId);
+    List<DepartmentInfo> getDepartmentById(String companyId);
+    DepartmentInfo getDepartmentByDepartmentId(String departmentId);
 }

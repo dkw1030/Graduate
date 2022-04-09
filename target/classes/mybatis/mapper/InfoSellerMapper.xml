@@ -85,4 +85,21 @@
     <update id="addFailed">
         update company set orderFailed = orderFailed + 1 where companyId = #{orderId}
     </update>
+
+    <select id="getCompanyById" parameterType="java.lang.String" resultType="com.example.demo.model.Model.resultType.CompanyInfo">
+        SELECT *
+        FROM company
+        where companyId = #{companyId};
+    </select>
+
+    <select id="getDepartmentById" parameterType="java.lang.String" resultType="com.example.demo.model.Model.resultType.DepartmentInfo">
+        SELECT *
+        FROM department
+        where companyId = #{companyId};
+    </select>
+    <select id="getDepartmentByDepartmentId" parameterType="java.lang.String" resultType="com.example.demo.model.Model.resultType.DepartmentInfo">
+        SELECT *
+        FROM department
+        where departmentId = #{departmentId};
+    </select>
 </mapper>

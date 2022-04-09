@@ -40,5 +40,14 @@ public class AccountBasicService {
         return resultDTO;
     }
 
+    public ResultDTO<String> change(String userId, String email, int phone) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+
+        int change = accountMapper.change(userId, email, phone);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
 }
 

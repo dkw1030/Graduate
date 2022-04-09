@@ -14,4 +14,9 @@ public interface AccountMapper {
 
     User getUserById(String id);
 
+    List<User> getEmployeeByCompanyId(String companyId);
+
+    int change(String userId, String email, int phone);
+
+    int changePassword(String userId, String password);
 }

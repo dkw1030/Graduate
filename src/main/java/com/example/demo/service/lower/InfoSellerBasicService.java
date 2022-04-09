@@ -1,7 +1,9 @@
 package com.example.demo.service.lower;
 
+import com.example.demo.mapper.AccountMapper;
 import com.example.demo.mapper.InfoSellerMapper;
 import com.example.demo.model.DTO.Result.ResultDTO;
+import com.example.demo.model.Model.CompanyDetail;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.Department;
 import com.example.demo.model.Model.User;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -22,6 +25,9 @@ public class InfoSellerBasicService {
 
     @Autowired
     InfoSellerMapper infoSellerMapper;
+
+    @Autowired
+    AccountMapper accountMapper;
 
     public ResultDTO<String> uploadSeller(List<List<String>> data) throws Exception{
         ResultDTO<String> resultDTO = new ResultDTO<>();
@@ -111,14 +117,78 @@ public class InfoSellerBasicService {
         switch (type){
             case 1:
                 infoSellerMapper.addConfirmed(orderId);
+                break;
             case 2:
                 infoSellerMapper.addRejected(orderId);
+                break;
             case 3:
                 infoSellerMapper.addCompleted(orderId);
+                break;
             case 4:
                 infoSellerMapper.addFailed(orderId);
         }
         resultDTO.setCode(0);
         return resultDTO;
     }
+
+    public ResultDTO<CompanyDetail> getCompanyDetail(String companyId) throws Exception{
+        ResultDTO<CompanyDetail> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        if(companyId == null){
+            return resultDTO;
+        }
+        CompanyInfo companyInfo = infoSellerMapper.getCompanyById(companyId);
+
+        List<DepartmentInfo> departmentInfos = infoSellerMapper.getDepartmentById(companyId);
+
+        List<User> employees = accountMapper.getEmployeeByCompanyId(companyId);
+
+        //组装companyDetail
+        CompanyDetail companyDetail = new CompanyDetail();
+        companyDetail.setCompanyInfo(companyInfo);
+        List<Department> departments = new ArrayList<>();
+        for (DepartmentInfo dep :
+                departmentInfos) {
+            Department department = new Department();
+            department.setDepartmentId(dep.getDepartmentId());
+            department.setCompanyId(companyId);
+            department.setDepartmentName(dep.getDepartmentName());
+            List<User> college = new ArrayList<>();
+            for (User user :
+                    employees) {
+                if(user.getUserRole()==1){
+                    companyDetail.setBoss(user);
+                }else if(user.getDepartmentId().equals(dep.getDepartmentId())){
+                    if(user.getUserRole() == 2){
+                        department.setMonitor(user);
+                    }else{
+                        college.add(user);
+                    }
+                }
+                department.setUsers(college);
+            }
+            departments.add(department);
+        }
+        companyDetail.setDepartments(departments);
+        resultDTO.setCode(0);
+        resultDTO.setData(companyDetail);
+        return resultDTO;
+    }
+
+    public ResultDTO<CompanyInfo> getCompanyInfoById(String companyId) throws Exception{
+        ResultDTO<CompanyInfo> resultDTO = new ResultDTO<>();
+        CompanyInfo companyInfo = infoSellerMapper.getCompanyById(companyId);
+        resultDTO.setCode(0);
+        resultDTO.setData(companyInfo);
+        return resultDTO;
+    }
+
+    public ResultDTO<DepartmentInfo> getDepartmentByDepartmentId(String departmentId) throws Exception{
+        ResultDTO<DepartmentInfo> resultDTO = new ResultDTO<>();
+        DepartmentInfo departmentInfo = infoSellerMapper.getDepartmentByDepartmentId(departmentId);
+        resultDTO.setCode(0);
+        resultDTO.setData(departmentInfo);
+        return resultDTO;
+    }
+
 }
