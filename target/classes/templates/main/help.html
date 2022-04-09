@@ -31,11 +31,99 @@
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="container-xl">
 
-        </div>
+            <h1 class="app-page-title">Help</h1>
+
+            <div class="app-card alert alert-dismissible shadow-sm mb-4 border-left-decoration" role="alert">
+                <div class="inner">
+                    <div class="app-card-body p-3 p-lg-4">
+                        <h3 class="mb-3">供应商档案</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>(1)采购方对供应商信息进行管理，方便采购员为供应商评价提供参考依据，为供应商提供参与系统的基础。
+                                    <br>
+                                    (2)点击导入，使用固定模板导入供应商信息。点击导出，将供应商信息导出到固定模板，并以压缩包的格式导出供应商资质附件。
+                                    <br>
+                                    (3)点击新增创建供应商信息，并创建系统人员信息关联部门外协单位。
+                                    <br>
+                                    (4)点击删除，删除相应供应商信息，注销供应商账号，部门外协单位中移除人员，删除后，可重新启用“已删除的供应商”。
+                                    <br>
+                                    (5)可根据供应商名称、供应商编码进行搜索，支持模糊搜索。
+                                    <br>
+                                    (6)点击查看，在供应商详情页面，展示供应商所有订单信息。
+                                    <br>
+                                </div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+                        <h3 class="mb-3">采购协同</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>采购协同是采购方针对下发的订单的订单进度全程跟踪。
+                                    <br>点击导入，以Excel 的形式，按固定数据模板格式导入订单信息，导入时需对数据进行检验。
+                                    <br>点击导出，以Excel 的形式，按固定数据模板格式导出订单信息。
+                                    <br>点击新增，手动维护订单以及订单包含的物料信息。
+                                    <br>点击删除，逻辑删除订单信息，同时需删除订单关联信息（订单涉及的物料信息、订单涉及的物流信息、订单关联的附件信息）。
+                                    <br>可根据采购员、供应商、订单号、物料名称、工号、型号、订单发布时间段进行搜索，支持模糊搜索。
+                                    <br>点击查看，查看订单详情信息。
+                                    <br>点击修改，修改订单以及订单包含的物料信息。
+                                    <br>点击导出进度明细，以Excel 的形式，按固定数据模板格式导出供应商维护的进度明细信息。
+                                </div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+                        <h3 class="mb-3">销售协同</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>销售协同是供应商处理采购方下发订单的确认和订单进度维护。
+                                    <br>可根据订单号、物料名称、工号、型号、订单发布时间段进行搜索，支持模糊搜索。
+                                    <br>点击查看，查看订单详情信息。
+                                    <br>点击订单确认，确认订单信息。
+                                    <br>点击订单驳回，退回采购方下发的订单信息。
+                                    <br>点击导入进度明细，以Excel 的形式，按固定数据模板格式导入订单进度明细信息，导入时需对数据进行检验，导入进度明细的订单一定是确认的订单。
+                                </div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+                        <h3 class="mb-3">物流管理</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>物流管理主要针对于生产完成的物料或验收完成的物料（达到发货标准的物料），发货到货全过程跟踪管理。
+                                    <br>点击新增发货单，维护物料发货信息，仅对供应商开放该功能。
+                                    <br>点击删除发货单，删除物料发货信息，仅在待发布状态下的发货单可删除，仅对供应商开放该功能。
+                                    <br>点击查看，查看发货单详情信息。
+                                    <br>点击签收，确认物料到货入库，仅对采购员开放该功能，支持批量操作。
+                                    <br>点击拒收，因质量原因不允许物料入库，仅对采购员开放该功能，支持批量操作。
+                                    <br>可根据按发货单号、供应商名称、物料名称、采购员名字搜索。
+                                </div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+                        <h3 class="mb-3">订单分析</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>供应商数据分析提供按供应商统计该供应商订单相关的订单确认率、订单完成率汇总统计的功能，点击导出将记录导出至Excel。</div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+                        <h3 class="mb-3">组织机构维护</h3>
+                        <div class="row gx-5 gy-3">
+                            <div class="col-12 col-lg-9">
+                                <div>(1)组织机构以树结构形式展示部门或单位信息，在树节点上右键打开新增页面，填写部门或单位信息，部门限制为仅能添加三级。
+                                <br>(2)人员信息维护功能以部门树和用户列表结合的形式展示用户信息，选择部门节点，点击新增用户，填写用户信息，并勾选角色权限信息，保存成功该用户可正常登录系统。
+                                </div>
+                            </div><!--//col-->
+                        </div><!--//row-->
+
+                    </div><!--//app-card-body-->
+
+                </div><!--//inner-->
+
+            </div><!--//app-card-->
+
+
+        </div><!--//container-fluid-->
     </div><!--//app-content-->
 
     <footer class="app-footer">
-        <div th:replace="common/footer::footer">
+        <div class="container text-center py-3">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="app-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+
         </div>
     </footer><!--//app-footer-->
 

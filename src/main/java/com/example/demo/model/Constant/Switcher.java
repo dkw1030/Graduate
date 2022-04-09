@@ -73,6 +73,6 @@ public class Switcher {
     }
 
     public static class PageSwitcher{
-        public static int NUM = 1;
+        public static int NUM = 6;
     }
 }

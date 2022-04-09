@@ -5,7 +5,7 @@
     <div class="sidepanel-inner d-flex flex-column">
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding">
-            <a class="app-logo" href="index.html"><img class="logo-icon mr-2" src="/assets/images/app-logo.svg" alt="logo"><span class="logo-text">PORTAL</span></a>
+            <a class="app-logo" th:href="${'/main/home/'+status.getUserId()}"><img class="logo-icon mr-2" src="/assets/images/app-logo.svg" alt="logo"><span class="logo-text">链彩云</span></a>
 
         </div><!--//app-branding-->
 
@@ -50,7 +50,7 @@
                 <ul class="app-menu footer-menu list-unstyled">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" th:href="${'/help'+status.getUserId()}">
+                        <a class="nav-link" th:href="${'/help/'+status.getUserId()}">
                             <span th:replace="~{common/sidepanelIcon::help}"></span>
                             <span class="nav-link-text">Help</span>
                         </a><!--//nav-link-->
