@@ -25,4 +25,7 @@ public interface InfoSellerMapper {
     CompanyInfo getCompanyById(String companyId);
     List<DepartmentInfo> getDepartmentById(String companyId);
     DepartmentInfo getDepartmentByDepartmentId(String departmentId);
+    int deleteDepartment(DepartmentInfo departmentInfo);
+    int deleteCompany(String companyId);
+    int validCompany(String companyId);
 }

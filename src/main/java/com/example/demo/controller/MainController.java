@@ -19,7 +19,6 @@ public class MainController {
     @RequestMapping("/main/home/{userId}")
     public String home(@PathVariable("userId") String userId, Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HOME_ID);
         sidePanelStatusDTO.setUserId(userId);
 
@@ -27,6 +26,12 @@ public class MainController {
         if(userResult.getCode() < 0){
             return "error/404";
         }
+        if(userResult.getData().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
+        }
+
         model.addAttribute("sidePanel", sidePanelStatusDTO);
         model.addAttribute("user",userResult.getData());
 
@@ -36,13 +41,19 @@ public class MainController {
     @RequestMapping("/help/{userId}")
     public String help(@PathVariable("userId") String userId, Model model){
         SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+
         sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.HELP_ID);
         sidePanelStatusDTO.setUserId(userId);
 
         ResultDTO<User> userResult = mainService.mainPage(userId);
         if(userResult.getCode() < 0){
             return "error/404";
+        }
+
+        if(userResult.getData().getUserRole()==0){
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
+        }else{
+            sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.SellerSidePanel);
         }
         model.addAttribute("sidePanel", sidePanelStatusDTO);
         model.addAttribute("user",userResult.getData());

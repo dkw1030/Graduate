@@ -40,14 +40,39 @@ public class AccountBasicService {
         return resultDTO;
     }
 
-    public ResultDTO<String> change(String userId, String email, int phone) throws Exception{
+    public ResultDTO<String> change(User user) throws Exception{
         ResultDTO<String> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
 
-        int change = accountMapper.change(userId, email, phone);
+        int change = accountMapper.change(user);
         resultDTO.setCode(0);
         return resultDTO;
     }
 
+    public ResultDTO<String> changeMonitor(String companyId, String dep, String peopleId) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        accountMapper.changeMonitorToEmployee(companyId, dep);
+        accountMapper.changeEmployeeToMonitor(companyId, dep, peopleId);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> changeDep(String companyId, String dep, String peopleId) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        accountMapper.changeDep(companyId, dep, peopleId);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> signUp(User user, String password) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        accountMapper.signUpAccount(user.getUserId(), password);
+        accountMapper.signUpUsers(user);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
 }
 

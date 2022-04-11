@@ -7,10 +7,12 @@ import com.example.demo.model.DTO.SellerListDTO;
 import com.example.demo.model.Model.CompanyDetail;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
+import com.example.demo.model.Model.resultType.DepartmentInfo;
 import com.example.demo.service.lower.AccountBasicService;
 import com.example.demo.service.lower.InfoSellerBasicService;
 import com.example.demo.utils.FileUtil;
 import com.example.demo.utils.LogUtil;
+import com.example.demo.utils.TimeUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -130,6 +132,58 @@ public class InfoSellerService {
             resultDTO.setCode(0);
         }catch (Exception e){
             LogUtil.errorLog(e, getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<CompanyDetail> getCompanyDetailByCompanyId(String companyId){
+        ResultDTO<CompanyDetail> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try {
+            resultDTO = infoSellerBasicService.getCompanyDetail(companyId);
+        }catch (Exception e){
+            LogUtil.errorLog(e, getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<String> addDep(String companyId, String departmentName){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        DepartmentInfo departmentInfo = new DepartmentInfo();
+        departmentInfo.setDepartmentName(departmentName);
+        departmentInfo.setDepartmentId(TimeUtil.getTimeStamp());
+        departmentInfo.setCompanyId(companyId);
+        try{
+            resultDTO = infoSellerBasicService.addDep(departmentInfo);
+        }catch (Exception e){
+            LogUtil.errorLog(e,getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<String> deleteDep(String companyId, String departmentId){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        DepartmentInfo departmentInfo = new DepartmentInfo();
+        departmentInfo.setDepartmentId(departmentId);
+        departmentInfo.setCompanyId(companyId);
+        try{
+            resultDTO = infoSellerBasicService.deleteDep(departmentInfo);
+        }catch (Exception e){
+            LogUtil.errorLog(e,getClass().getName());
+        }
+        return resultDTO;
+    }
+
+    public ResultDTO<String> validCompany(String companyId, int type){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        try{
+            infoSellerBasicService.validCompany(companyId, type);
+            resultDTO.setCode(0);
+        }catch (Exception e){
+            LogUtil.errorLog(e,getClass().getName());
         }
         return resultDTO;
     }

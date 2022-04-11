@@ -4,6 +4,7 @@ import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.FrameworkDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
+import com.example.demo.model.Model.CompanyDetail;
 import com.example.demo.model.Model.User;
 import com.example.demo.service.Upper.AccountService;
 import com.example.demo.service.Upper.InfoSellerService;
@@ -63,12 +64,53 @@ public class AccountController {
         }
     }
 
-    @RequestMapping("/addUser/{companyId}/{userId}")
-    public String addUser(@PathVariable("companyId") String companyId,
-                          @PathVariable("userId") String userId,
-                          Model model){
-        return "index";
+    @RequestMapping("/signUp/{type}")
+    public String signUp(@PathVariable("type")String type, Model model){
+
+        model.addAttribute("companyId", "0");
+        model.addAttribute("departmentId", "0");
+        model.addAttribute("type", type);
+        return "account/signUp";
     }
+
+//    @RequestMapping("/signUp/{companyId}/{type}")
+//    public String signUp(@PathVariable("type")String type,@PathVariable("companyId")String companyId, Model model){
+//
+//        model.addAttribute("companyId", companyId);
+//        model.addAttribute("departmentId", "0");
+//        model.addAttribute("type", type);
+//        return "account/signUp";
+//    }
+
+    @RequestMapping("/signUpAction/{type}")
+    public String signUpAction(@PathVariable("type")String type,
+                         @RequestParam("name") String name,
+                               @RequestParam("userId") String userId,
+                         @RequestParam("password") String password,
+                         @RequestParam("companyId") String companyId,
+                         @RequestParam("departmentId") String departmentId,
+                         Model model){
+        int role = Integer.parseInt(type);
+        ResultDTO<String> userResult = accountService.signUp(name, role, companyId, departmentId, password);
+        int code = userResult.getCode();
+        if(code<0){
+            return "error/404";
+        }
+        if(type.equals("0")){
+            model.addAttribute("msg", userResult.getData());
+            model.addAttribute("type", type);
+            return "account/signUp";
+        }else{
+            ResultDTO<User> userResultDTO = accountService.getUserById(userId);
+            ResultDTO<CompanyDetail> companyResult = infoSellerService.getCompanyDetailByCompanyId(companyId);
+            model.addAttribute("user", userResultDTO.getData());
+            model.addAttribute("company", companyResult.getData());
+
+            return "redirect:/addUser/"+companyId+"/"+userId;
+        }
+
+    }
+
 
     @RequestMapping("/userInfo/{userId}/{type}")
     public String userInfo(@PathVariable("userId") String userId,
@@ -100,10 +142,20 @@ public class AccountController {
 
     @RequestMapping("/changeUserInfo/{userId}")
     public String ChangeAction(@PathVariable("userId") String userId,
-                                 @RequestParam("email")String email,
-                                 @RequestParam("phone")int phone,
-                                 Model model){
-        ResultDTO<String> change = accountService.change(userId, email, phone);
+                               @RequestParam("email")String email,
+                               @RequestParam("name")String name,
+                               @RequestParam("sex")String sex,
+                               @RequestParam("phone")int phone,
+                               Model model){
+//        System.out.println("0");
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserName(name);
+        user.setPhone(phone);
+        user.setSex(Integer.parseInt(sex));
+//        user.setSex(1);
+        user.setEmail(email);
+        ResultDTO<String> change = accountService.change(user);
         if(change.getCode()<0){
             return "error/404";
         }

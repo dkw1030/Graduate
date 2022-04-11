@@ -8,6 +8,7 @@ import com.example.demo.model.Model.Order;
 import com.example.demo.model.Model.OrderItem;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.OrderInfo;
+import com.example.demo.model.Model.resultType.OrderPercentage;
 import com.example.demo.utils.LogUtil;
 import com.example.demo.utils.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,7 +162,7 @@ public class OrderBasicService {
     public ResultDTO<String> changeProcess(ItemChangeDTO itemChangeDTO) throws Exception{
         ResultDTO<String> resultDTO = new ResultDTO<>();
         int result = orderMapper.changeProcess(itemChangeDTO);
-        System.out.println(result);
+//        System.out.println(result);
         resultDTO.setCode(0);
         return resultDTO;
     }
@@ -178,6 +179,24 @@ public class OrderBasicService {
         ResultDTO<String> resultDTO = new ResultDTO<>();
         resultDTO.setCode(-1);
         int result = orderMapper.updateOrderStatus(orderId, value);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<OrderPercentage> getOrderPercentage(String id, int type) throws Exception{
+        ResultDTO<OrderPercentage> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        OrderPercentage orderPercentage = orderMapper.getOrderPercentage(id, type);
+        resultDTO.setData(orderPercentage);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<OrderPercentage> getOrderCost(String id, int type) throws Exception{
+        ResultDTO<OrderPercentage> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        OrderPercentage orderCost = orderMapper.getOrderCost(id, type);
+        resultDTO.setData(orderCost);
         resultDTO.setCode(0);
         return resultDTO;
     }

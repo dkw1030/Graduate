@@ -102,4 +102,16 @@
         FROM department
         where departmentId = #{departmentId};
     </select>
+
+    <delete id="deleteDepartment" parameterType="com.example.demo.model.Model.resultType.DepartmentInfo">
+        delete from department where departmentId = #{departmentId} and companyId = #{companyId}
+    </delete>
+
+    <update id="deleteCompany">
+        update company set valid = 0 where companyId = #{companyId}
+    </update>
+
+    <update id="validCompany">
+        update company set valid = 1 where companyId = #{companyId}
+    </update>
 </mapper>

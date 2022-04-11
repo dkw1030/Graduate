@@ -158,18 +158,21 @@ public class InfoSellerBasicService {
                     employees) {
                 if(user.getUserRole()==1){
                     companyDetail.setBoss(user);
+                    user.setDepartmentName(department.getDepartmentName());
                 }else if(user.getDepartmentId().equals(dep.getDepartmentId())){
                     if(user.getUserRole() == 2){
                         department.setMonitor(user);
                     }else{
                         college.add(user);
                     }
+                    user.setDepartmentName(department.getDepartmentName());
                 }
                 department.setUsers(college);
             }
             departments.add(department);
         }
         companyDetail.setDepartments(departments);
+        companyDetail.setAllUsers(employees);
         resultDTO.setCode(0);
         resultDTO.setData(companyDetail);
         return resultDTO;
@@ -188,6 +191,37 @@ public class InfoSellerBasicService {
         DepartmentInfo departmentInfo = infoSellerMapper.getDepartmentByDepartmentId(departmentId);
         resultDTO.setCode(0);
         resultDTO.setData(departmentInfo);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> addDep(DepartmentInfo departmentInfo){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        List<DepartmentInfo> departmentInfos = Arrays.asList(departmentInfo);
+        infoSellerMapper.insertDepartment(departmentInfos);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+
+    public ResultDTO<String> deleteDep(DepartmentInfo departmentInfo){
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        accountMapper.changeMonitorToEmployee(departmentInfo.getCompanyId(), departmentInfo.getDepartmentId());
+        infoSellerMapper.deleteDepartment(departmentInfo);
+        resultDTO.setCode(0);
+        return resultDTO;
+    }
+
+    public ResultDTO<String> validCompany(String companyId,int type) throws Exception{
+        ResultDTO<String> resultDTO = new ResultDTO<>();
+        resultDTO.setCode(-1);
+        if(type == 0){
+            infoSellerMapper.deleteCompany(companyId);
+        }else {
+            infoSellerMapper.validCompany(companyId);
+        }
+        resultDTO.setCode(0);
         return resultDTO;
     }
 

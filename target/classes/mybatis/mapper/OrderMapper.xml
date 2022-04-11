@@ -88,12 +88,30 @@
             <if test="witchTime == 0">
                 orderUploadTime
             </if>
+            <if test="witchTime == 1">
+                orderConfirmTime
+            </if>
+            <if test="witchTime == 2">
+                orderDeliverTime
+            </if>
+            <if test="witchTime == 3">
+                orderFinishTime
+            </if>
             &gt;= #{startTime}
         </if>
         <if test="endTime != '' and endTime!=null">
             and
             <if test="witchTime == 0">
                 orderUploadTime
+            </if>
+            <if test="witchTime == 1">
+                orderConfirmTime
+            </if>
+            <if test="witchTime == 2">
+                orderDeliverTime
+            </if>
+            <if test="witchTime == 3">
+                orderFinishTime
             </if>
             &lt;= #{endTime}
         </if>
@@ -115,4 +133,39 @@
     <update id="updateOrderStatus">
         update orders set orderStatus = #{value} where orderId = #{orderId}
     </update>
+
+    <select id="getOrderPercentage" resultType="com.example.demo.model.Model.resultType.OrderPercentage">
+        SELECT
+        count(case when orderStatus &gt; 3 and orderStatus &lt; 7 then orderStatus end) as orderConfirmed,
+        count(case when orderStatus = 3 then orderStatus end) as orderRejected,
+        count(case when orderStatus = 6 then orderStatus end) as orderCompleted,
+        count(case when orderStatus = 7 then orderStatus end) as orderFailed
+        FROM orders
+        where
+        <if test="type == 0">
+            buyerId = #{id}
+        </if>
+        <if test="type == 1">
+            sellerId = #{id}
+        </if>
+        ;
+    </select>
+    <select id="getOrderCost" resultType="com.example.demo.model.Model.resultType.OrderPercentage">
+        select
+        sum(case when orderStatus=5 then number * cost end) as delivering,
+        sum(case when orderStatus=4 or orderStatus=7 then number * cost end) as producing,
+        sum(case when orderStatus=1 then number * cost end) as finish,
+        sum(case when orderStatus=6 then number * cost end) as fin
+        from
+        orders, item
+        where
+        orders.orderId = item.orderId
+        <if test="type == 0">
+            and buyerId = #{id}
+        </if>
+        <if test="type == 1">
+            and sellerId = #{id}
+        </if>
+        ;
+    </select>
 </mapper>

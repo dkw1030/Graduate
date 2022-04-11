@@ -4,6 +4,7 @@ import com.example.demo.model.DTO.ItemChangeDTO;
 import com.example.demo.model.DTO.OrderSearchDTO;
 import com.example.demo.model.Model.OrderItem;
 import com.example.demo.model.Model.resultType.OrderInfo;
+import com.example.demo.model.Model.resultType.OrderPercentage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,4 +23,16 @@ public interface OrderMapper {
     int changeProcess(ItemChangeDTO item);
     int updateFirstTime(@Param("orderId")String orderId, @Param("value")int value);
     int updateOrderStatus(@Param("orderId")String orderId, @Param("value")int value);
+
+    /**
+     *
+     * @param id
+     * @param type
+     * 0 buyerId
+     * 1 companyId
+     * @return
+     */
+    OrderPercentage getOrderPercentage(@Param("id")String id, @Param("type")int type);
+    OrderPercentage getOrderCost(@Param("id")String id, @Param("type")int type);
+
 }

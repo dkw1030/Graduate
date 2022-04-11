@@ -33,20 +33,16 @@
             <div class="tree">
                 <ul>
                     <li>
-                        <a th:utext="${#strings.replace(company.getCompanyInfo().getCompanyName()+'\n老板:'+company.getBoss().getUserName(),'\n','<br>')}" th:href="${'/userInfo/'+company.getBoss().getUserId()+'1'}" target="_blank"></a>
+                        <a th:utext="${#strings.replace(company.getCompanyInfo().getCompanyName()+'\n老板:'+company.getBoss().getUserName(),'\n','<br>')}" th:href="${'/userInfo/'+company.getBoss().getUserId()+'/1'}" target="_blank"></a>
                         <ul>
                             <li th:each="dep:${company.getDepartments()}">
-                                <a th:text="${dep.getDepartmentName()}"  th:href="${(user.getUserRole()==1 or user.getUserRole()==3)?'/addUser/'+company.getCompanyInfo().getCompanyId()+'/'+dep.getDepartmentId():''}" target="_blank"></a>
+                                <a th:text="${dep.getDepartmentName()}"  th:href="${(user.getUserRole()==1 or user.getUserRole()==2)?'/addUser/'+company.getCompanyInfo().getCompanyId()+'/'+user.getUserId():''}" target="_blank"></a>
                                 <ul class="vertical">
-                                    <li><a th:href="${'/userInfo/'+dep.getMonitor().getUserId()+'/1'}" target="_blank" th:text="${'主管：'+dep.getMonitor().getUserName()}">Human Resources</a></li>
+                                    <li th:if="${dep.getMonitor()!=null}"><a th:href="${'/userInfo/'+dep.getMonitor().getUserId()+'/1'}" target="_blank" th:text="${'主管：'+dep.getMonitor().getUserName()}"></a></li>
                                     <li th:each="employee:${dep.getUsers()}">
                                         <a th:href="${'/userInfo/'+employee.getUserId()+'/1'}" target="_blank" th:text="${employee.getUserName()}"></a>
                                     </li>
 
-<!--                                    <li><a href="#">Finance</a></li>-->
-<!--                                    <li><a href="#">Marketing</a></li>-->
-<!--                                    <li><a href="#">IT/IS</a></li>-->
-<!--                                    <li><a href="#">Service Delivery</a></li>-->
                                 </ul>
                             </li>
                         </ul>

@@ -54,4 +54,6 @@ public class User {
      * 头像链接
      */
     private String iconUrl;
+
+    private String departmentName;
 }

@@ -4,6 +4,7 @@ import com.example.demo.model.Constant.Switcher;
 import com.example.demo.model.DTO.DetailDTO;
 import com.example.demo.model.DTO.Result.ResultDTO;
 import com.example.demo.model.DTO.SidePanelStatusDTO;
+import com.example.demo.model.Model.CompanyDetail;
 import com.example.demo.model.Model.Order;
 import com.example.demo.model.Model.OrderItem;
 import com.example.demo.model.Model.User;
@@ -140,6 +141,35 @@ public class FileController {
         FileCopyUtils.copy(is,os);
     }
 
+    @ResponseBody
+    @RequestMapping("/downloadCompany/{companyId}")
+    public void downloadCompany(
+                             @PathVariable("companyId")String companyId,
+                             HttpServletResponse response) throws Exception {
+
+
+        ResultDTO<CompanyDetail> resultDTO = infoSellerService.getCompanyDetailByCompanyId(companyId);
+        //转data
+        List<List<String>> data = genCompanyData(resultDTO.getData());
+
+        //输出excel
+        String fileName= TimeUtil.getTimeStamp()+".xlsx";
+        String realPath = Switcher.FilePathSwitcher.clout_file_path_order;
+        String path = realPath+fileName;
+        FileUtil.WriteExcel(data,path);
+        //下载
+        // 1.去指定目录读取文件
+        File file = new File(realPath, fileName);
+        // 2.将文件读取为文件输入流
+        FileInputStream is = new FileInputStream(file);
+        // 2.1 获取响应流之前  一定要设置以附件形式下载
+        response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        // 3.获取响应输出流
+        ServletOutputStream os = response.getOutputStream();
+
+        FileCopyUtils.copy(is,os);
+    }
+
     public List<List<String>> genData(Order order){
         List<List<String>> data = new ArrayList<>();
         List<String> row1 = Arrays.asList("订单号","订单名称","订单状态","订单上传时间","订单确认时间","订单寄出时间","订单完结时间");
@@ -168,6 +198,55 @@ public class FileController {
                     item.getCost()+"",
                     item.getProcess()+""));
         }
+        return data;
+    }
+
+    public List<List<String>> genCompanyData(CompanyDetail company){
+        List<List<String>> data = new ArrayList<>();
+        List<String> row1 = Arrays.asList("公司编号","公司名","公司简介");
+        List<String> row2 = Arrays.asList(company.getCompanyInfo().getCompanyId(),
+                company.getCompanyInfo().getCompanyName(),
+                company.getCompanyInfo().getCompanyDescription());
+        List<String> row3 = Arrays.asList("订单确认数","订单拒绝数","订单完成数","订单驳回数","订单首次确认率","订单首次签收率");
+        List<String> row4 = Arrays.asList(company.getCompanyInfo().getOrderConfirmed()+"",
+                company.getCompanyInfo().getOrderRejected()+"",
+                company.getCompanyInfo().getOrderCompleted()+"",
+                company.getCompanyInfo().getOrderFailed()+"",
+                (company.getCompanyInfo().getOrderConfirmed()+0.5)*100/(company.getCompanyInfo().getOrderConfirmed()+company.getCompanyInfo().getOrderRejected()+0.5)+"%",
+                (company.getCompanyInfo().getOrderCompleted()+0.5)*100/(company.getCompanyInfo().getOrderCompleted()+company.getCompanyInfo().getOrderFailed()+0.5)+"%");
+        List<String> row5 = Arrays.asList("用户名","用户账号","职位","部门","编号\n");
+        data.add(row1);
+        data.add(row2);
+        data.add(row3);
+        data.add(row4);
+        data.add(row5);
+
+        for (User user :
+                company.getAllUsers()) {
+            String roleStr = "";
+            switch (user.getUserRole()){
+                case 1:
+                    roleStr = "老板";
+                    break;
+                case 2:
+                    roleStr = "主管";
+                    break;
+                case 3:
+                    roleStr = "员工";
+                    break;
+            }
+            String departmentName = "";
+            if(user.getDepartmentName()!=null){
+                departmentName = user.getDepartmentName();
+            }
+            data.add(Arrays.asList(user.getUserName(),
+                    user.getUserId(),
+                    roleStr,
+                    departmentName,
+                    user.getDepartmentId()));
+        }
+
+
         return data;
     }
 

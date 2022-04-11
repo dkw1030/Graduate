@@ -13,4 +13,6 @@ public class CompanyDetail{
     private User boss;
 
     private List<Department> departments;
+
+    private List<User> allUsers;
 }

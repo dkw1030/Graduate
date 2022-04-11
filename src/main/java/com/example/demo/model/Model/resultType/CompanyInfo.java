@@ -38,4 +38,6 @@ public class CompanyInfo {
      * 订单驳回数
      */
     private int orderFailed;
+
+    private int valid;
 }

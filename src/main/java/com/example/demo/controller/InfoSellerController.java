@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Constant.Switcher;
-import com.example.demo.model.DTO.PageDTO;
+import com.example.demo.model.DTO.*;
 import com.example.demo.model.DTO.Result.ResultDTO;
-import com.example.demo.model.DTO.SellerListDTO;
-import com.example.demo.model.DTO.SidePanelStatusDTO;
-import com.example.demo.model.DTO.ListUrlDTO;
 import com.example.demo.model.Model.CompanyOverView;
 import com.example.demo.model.Model.User;
 import com.example.demo.model.Model.resultType.OrderInfo;
 import com.example.demo.service.Upper.AccountService;
+import com.example.demo.service.Upper.AnalysisService;
 import com.example.demo.service.Upper.InfoSellerService;
 import com.example.demo.utils.JsonListUtil;
 import com.example.demo.utils.PageControlUtil;
@@ -34,6 +32,9 @@ public class InfoSellerController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AnalysisService analysisService;
 
     @RequestMapping("/sellerList/{userId}")
     public String infoSeller( @PathVariable("userId") String userId,
@@ -144,36 +145,6 @@ public class InfoSellerController {
         return "infoSeller/sellerList";
     }
 
-    @RequestMapping("/infoSeller/sellerDetail/{userId}/{orderId}")
-    public String sellerDetail( @PathVariable("userId") String userId,
-                                @PathVariable("orderId") String orderId,
-                              Model model){
-
-        SidePanelStatusDTO sidePanelStatusDTO = new SidePanelStatusDTO();
-        sidePanelStatusDTO.setSidePanel(Switcher.MenuSwitcher.BuyerSidePanel);
-        sidePanelStatusDTO.setCurMenu(Switcher.MenuSwitcher.INFO_SELLER_ID);
-        sidePanelStatusDTO.setCurSubMenu(Switcher.MenuSwitcher.INFO_SELLER_SELLER_DETAIL_ID);
-        sidePanelStatusDTO.setUserId(userId);
-
-        ResultDTO<SellerListDTO> pageResultDTO = infoSellerService.sellerListPage(userId);
-        if(pageResultDTO.getCode() < 0){
-            return "error/404";
-        }
-
-        List<CompanyOverView> allList = pageResultDTO.getData().getCompanyOverViewList();
-        PageDTO pageDTO = PageControlUtil.generatePageDTO(allList, 1);
-        List<CompanyOverView> showList = allList.subList(fromIndex(pageDTO.getCur()),
-                toIndex(pageDTO.getCur(), allList.size()));
-
-        model.addAttribute("user", pageResultDTO.getData().getUser());
-        model.addAttribute("companyOverView", showList);
-        model.addAttribute("list", allList);
-        model.addAttribute("sidePanel", sidePanelStatusDTO);
-        model.addAttribute("page", pageDTO);
-
-        return "infoSeller/sellerDetail";
-    }
-
     @RequestMapping("/uploadSeller/{userId}")
     public String loginLayout( @PathVariable("userId") String userId,
                                Model model){
@@ -219,5 +190,25 @@ public class InfoSellerController {
         model.addAttribute("user", userResultDTO.getData());
         model.addAttribute("msg", resultDTO.getData());
         return "infoSeller/uploadSeller";
+    }
+
+    @RequestMapping("/validCompany/{companyId}/{userId}/{value}")
+    public String sellerDetail( @PathVariable("userId") String userId,
+                                @PathVariable("companyId") String companyId,
+                                @PathVariable("value") String value,
+                                Model model){
+
+        infoSellerService.validCompany(companyId,Integer.parseInt(value));
+
+        ResultDTO<User> resultDTO = accountService.getUserById(userId);
+        if(resultDTO.getCode() < 0){
+            return "error/404";
+        }
+        model.addAttribute("user", resultDTO.getData());
+        ResultDTO<CompanyDetailDTO> resultDTOSeller = analysisService.analysisSeller(companyId);
+        model.addAttribute("data", resultDTOSeller.getData().getOrderPercentage());
+        model.addAttribute("company", resultDTOSeller.getData().getCompanyDetail());
+
+        return "infoSeller/sellerDetail";
     }
 }
